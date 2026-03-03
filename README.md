@@ -1,6 +1,6 @@
-# Pluely — fork (no bullshit)
+# Runningbord — fork (no bullshit)
 
-This is a fork of Pluely with no bullshit attached.
+This is a fork of Runningbord with no bullshit attached.
 
 **Extra features:**
 - Completely stripped off license logic with updater logic removed to avoid conflicts.
@@ -13,7 +13,7 @@ This is a fork of Pluely with no bullshit attached.
 
 **Undetectable Everywhere:**
 
-The overlay window is designed to be invisible in video calls, screen shares, recordings, and screenshots. When you share your screen in Zoom, Google Meet, Microsoft Teams, or any other meeting platform, Pluely remains completely hidden from your audience. The translucent design makes it extremely difficult to capture in screenshots, and it won't appear on projectors or shared screens.
+The overlay window is designed to be invisible in video calls, screen shares, recordings, and screenshots. When you share your screen in Zoom, Google Meet, Microsoft Teams, or any other meeting platform, Runningbord remains completely hidden from your audience. The translucent design makes it extremely difficult to capture in screenshots, and it won't appear on projectors or shared screens.
 
 **Perfect Stealth Design:**
 
@@ -21,11 +21,11 @@ The window transparency can be adjusted to your preference, allowing you to see 
 
 **Critical Use Cases:**
 
-Use Pluely confidently during job interviews to get real-time information without detection. Access product details instantly during sales calls while maintaining professionalism. Reference documentation during technical meetings without breaking your flow. Get learning assistance during educational presentations that's completely invisible to your audience. Analyze screenshots and get suggestions during design reviews without anyone knowing. Debug code and get syntax help during live coding sessions in complete stealth.
+Use Runningbord confidently during job interviews to get real-time information without detection. Access product details instantly during sales calls while maintaining professionalism. Reference documentation during technical meetings without breaking your flow. Get learning assistance during educational presentations that's completely invisible to your audience. Analyze screenshots and get suggestions during design reviews without anyone knowing. Debug code and get syntax help during live coding sessions in complete stealth.
 
 ## Privacy-First Architecture
 
-Your data stays yours. Pluely is engineered with privacy as the foundation, not an afterthought.
+Your data stays yours. Runningbord is engineered with privacy as the foundation, not an afterthought.
 
 **Local Storage:**
 
@@ -41,11 +41,11 @@ License keys and sensitive credentials are stored in encrypted secure storage in
 
 **Zero Server Dependency:**
 
-Pluely makes API calls directly from your device to your chosen AI provider. There are no proxy servers, no middleware, and no data collection. Your conversations go straight from your device to OpenAI, Anthropic, Google, or whichever provider you choose. You can inspect every network request in your browser's developer tools to verify this claim.
+Runningbord makes API calls directly from your device to your chosen AI provider. There are no proxy servers, no middleware, and no data collection. Your conversations go straight from your device to OpenAI, Anthropic, Google, or whichever provider you choose. You can inspect every network request in your browser's developer tools to verify this claim.
 
 **No Telemetry:**
 
-Pluely has no analytics, no usage tracking, no data collection, and no telemetry of any kind. Your usage patterns, conversations, and behavior remain completely private. The application doesn't phone home, doesn't report statistics, and doesn't collect any information about how you use it.
+Runningbord has no analytics, no usage tracking, no data collection, and no telemetry of any kind. Your usage patterns, conversations, and behavior remain completely private. The application doesn't phone home, doesn't report statistics, and doesn't collect any information about how you use it.
 
 **Offline Capability:**
 
@@ -53,7 +53,7 @@ The application works without an internet connection for all local features. You
 
 ## Blazing Fast Performance
 
-Built with Tauri and Rust, Pluely delivers native desktop performance that puts web-based alternatives to shame.
+Built with Tauri and Rust, Runningbord delivers native desktop performance that puts web-based alternatives to shame.
 
 **Lightweight Binary:**
 
@@ -61,11 +61,11 @@ The entire application is approximately 10MB in size, making it 27 times smaller
 
 **Instant Startup:**
 
-Pluely launches in under 100 milliseconds. There's no splash screen, no loading spinner, and no waiting. Click the icon and it's ready to use immediately. This instant startup makes it perfect for quick queries and impromptu assistance.
+Runningbord launches in under 100 milliseconds. There's no splash screen, no loading spinner, and no waiting. Click the icon and it's ready to use immediately. This instant startup makes it perfect for quick queries and impromptu assistance.
 
 **Native Performance:**
 
-Built on Tauri, Pluely runs as a native application using your system's webview. There's no embedded Chromium, no browser overhead, and no unnecessary resource consumption. It uses 50% less RAM compared to Electron apps and has minimal CPU impact even during active use.
+Built on Tauri, Runningbord runs as a native application using your system's webview. There's no embedded Chromium, no browser overhead, and no unnecessary resource consumption. It uses 50% less RAM compared to Electron apps and has minimal CPU impact even during active use.
 
 **Efficient Resource Usage:**
 
@@ -73,11 +73,11 @@ The application typically uses less than 50MB of RAM during normal operation. Sy
 
 **Cross-Platform:**
 
-Pluely runs natively on macOS, Windows, and Linux with platform-specific optimizations. The same codebase delivers optimal performance on all three platforms, using native system APIs and respecting platform conventions.
+Runningbord runs natively on macOS, Windows, and Linux with platform-specific optimizations. The same codebase delivers optimal performance on all three platforms, using native system APIs and respecting platform conventions.
 
 ## Complete Control
 
-Own your AI experience. Pluely gives you unprecedented control over every aspect of the application.
+Own your AI experience. Runningbord gives you unprecedented control over every aspect of the application.
 
 **Any AI Provider:**
 
@@ -101,7 +101,7 @@ The entire codebase is open source under GPL v3. You can inspect every line of c
 
 ## Always Ready
 
-Pluely sits quietly on your desktop, consuming minimal resources while remaining instantly accessible.
+Runningbord sits quietly on your desktop, consuming minimal resources while remaining instantly accessible.
 
 **One-Click Access:**
 
@@ -113,11 +113,11 @@ All conversations are saved locally in SQLite with full context. Return to previ
 
 **Background Operation:**
 
-Pluely can run silently in the background with the overlay hidden. Enable autostart to launch it automatically when your system boots. Hide the dock icon for maximum stealth while keeping the application running and accessible via keyboard shortcuts.
+Runningbord can run silently in the background with the overlay hidden. Enable autostart to launch it automatically when your system boots. Hide the dock icon for maximum stealth while keeping the application running and accessible via keyboard shortcuts.
 
 **Zero Maintenance:**
 
-No subscriptions to manage, no accounts to maintain, and no services to configure beyond your AI provider. Once set up, Pluely just works. Updates are delivered automatically when available, and you control when to install them.
+No subscriptions to manage, no accounts to maintain, and no services to configure beyond your AI provider. Once set up, Runningbord just works. Updates are delivered automatically when available, and you control when to install them.
 
 ---
 
@@ -143,8 +143,8 @@ This includes essential packages like WebKitGTK (Linux), system libraries, and o
 
 ```bash
 # Clone the repository
-git clone https://github.com/iamsrikanthnani/pluely.git
-cd pluely
+git clone https://github.com/iamsrikanthnani/runningbord.git
+cd runningbord
 
 # Install dependencies
 npm install
@@ -176,7 +176,7 @@ This project is licensed under the **GNU General Public License v3.0** - see the
 ---
 
 ## 🙏 Acknowledgments
-- Pluely
+- Runningbord
 - **[Cluely](https://cluely.com/)** - Inspiration for this open source alternative
 - **[Tauri](https://tauri.app/)** - Amazing desktop framework
 - **[tauri-nspanel](https://github.com/ahkohd/tauri-nspanel)** - macOS native panel integration for Tauri

@@ -21,15 +21,15 @@ import { safeLocalStorage } from "@/lib";
 import { STORAGE_KEYS } from "@/config";
 import moment from "moment";
 
-interface PluelyPrompt {
+interface RunningbordPrompt {
   title: string;
   prompt: string;
   modelId: string;
   modelName: string;
 }
 
-interface PluelyPromptsResponse {
-  prompts: PluelyPrompt[];
+interface RunningbordPromptsResponse {
+  prompts: RunningbordPrompt[];
   total: number;
   last_updated?: string;
 }
@@ -44,20 +44,20 @@ interface Model {
   isAvailable: boolean;
 }
 
-const SELECTED_PLUELY_MODEL_STORAGE_KEY = "selected_pluely_model";
-const SELECTED_PLUELY_PROMPT_STORAGE_KEY = "selected_pluely_prompt";
+const SELECTED_RUNNINGBORD_MODEL_STORAGE_KEY = "selected_runningbord_model";
+const SELECTED_RUNNINGBORD_PROMPT_STORAGE_KEY = "selected_runningbord_prompt";
 
-export const PluelyPrompts = () => {
+export const RunningbordPrompts = () => {
   const { setSystemPrompt, hasActiveLicense, setSupportsImages } = useApp();
-  const [prompts, setPrompts] = useState<PluelyPrompt[]>([]);
+  const [prompts, setPrompts] = useState<RunningbordPrompt[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
-  const [selectedPluelyPrompt, setSelectedPluelyPrompt] =
-    useState<PluelyPrompt | null>(() => {
+  const [selectedRunningbordPrompt, setSelectedRunningbordPrompt] =
+    useState<RunningbordPrompt | null>(() => {
       // Load selected prompt from local storage on initial render
       const stored = safeLocalStorage.getItem(
-        SELECTED_PLUELY_PROMPT_STORAGE_KEY
+        SELECTED_RUNNINGBORD_PROMPT_STORAGE_KEY
       );
       if (stored) {
         try {
@@ -74,20 +74,20 @@ export const PluelyPrompts = () => {
   useEffect(() => {
     if (!fetchInitiated.current) {
       fetchInitiated.current = true;
-      fetchPluelyPrompts();
+      fetchRunningbordPrompts();
       fetchModels();
     }
   }, []);
 
-  // Watch for changes in user's selected prompt and clear Pluely selection if needed
+  // Watch for changes in user's selected prompt and clear Runningbord selection if needed
   useEffect(() => {
     const checkUserPromptSelection = () => {
       const userSelectedPromptId = safeLocalStorage.getItem(
         STORAGE_KEYS.SELECTED_SYSTEM_PROMPT_ID
       );
-      // If user has selected one of their own prompts, clear Pluely prompt selection
+      // If user has selected one of their own prompts, clear Runningbord prompt selection
       if (userSelectedPromptId) {
-        setSelectedPluelyPrompt(null);
+        setSelectedRunningbordPrompt(null);
       }
     };
 
@@ -105,19 +105,19 @@ export const PluelyPrompts = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  const fetchPluelyPrompts = async () => {
+  const fetchRunningbordPrompts = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await invoke<PluelyPromptsResponse>("fetch_prompts");
+      const response = await invoke<RunningbordPromptsResponse>("fetch_prompts");
       setPrompts(response.prompts);
       if (response.last_updated) {
         setLastUpdated(response.last_updated);
       }
     } catch (err) {
-      console.error("Failed to fetch Pluely prompts:", err);
+      console.error("Failed to fetch Runningbord prompts:", err);
       setError(
-        typeof err === "string" ? err : "Failed to fetch Pluely prompts"
+        typeof err === "string" ? err : "Failed to fetch Runningbord prompts"
       );
     } finally {
       setIsLoading(false);
@@ -133,11 +133,11 @@ export const PluelyPrompts = () => {
     }
   };
 
-  const handleSelectPluelyPrompt = async (prompt: PluelyPrompt) => {
+  const handleSelectRunningbordPrompt = async (prompt: RunningbordPrompt) => {
     try {
       // Set the system prompt
       setSystemPrompt(prompt.prompt);
-      setSelectedPluelyPrompt(prompt);
+      setSelectedRunningbordPrompt(prompt);
 
       // Clear the user's selected prompt ID from local storage
       // This ensures the user prompt cards don't show as selected
@@ -146,9 +146,9 @@ export const PluelyPrompts = () => {
       // Save the system prompt to local storage
       safeLocalStorage.setItem(STORAGE_KEYS.SYSTEM_PROMPT, prompt.prompt);
 
-      // Save the selected Pluely prompt to local storage for persistence
+      // Save the selected Runningbord prompt to local storage for persistence
       safeLocalStorage.setItem(
-        SELECTED_PLUELY_PROMPT_STORAGE_KEY,
+        SELECTED_RUNNINGBORD_PROMPT_STORAGE_KEY,
         JSON.stringify(prompt)
       );
 
@@ -164,23 +164,23 @@ export const PluelyPrompts = () => {
 
         // Save model selection to local storage instead of secure storage
         safeLocalStorage.setItem(
-          SELECTED_PLUELY_MODEL_STORAGE_KEY,
+          SELECTED_RUNNINGBORD_MODEL_STORAGE_KEY,
           JSON.stringify(matchingModel)
         );
       }
     } catch (error) {
-      console.error("Failed to select Pluely prompt:", error);
+      console.error("Failed to select Runningbord prompt:", error);
     }
   }; 
 
-  const handleCardClick = (prompt: PluelyPrompt) => {
-    handleSelectPluelyPrompt(prompt);
+  const handleCardClick = (prompt: RunningbordPrompt) => {
+    handleSelectRunningbordPrompt(prompt);
   };
 
-  const isPromptSelected = (prompt: PluelyPrompt) => {
+  const isPromptSelected = (prompt: RunningbordPrompt) => {
     return (
-      selectedPluelyPrompt?.title === prompt.title &&
-      selectedPluelyPrompt?.modelId === prompt.modelId
+      selectedRunningbordPrompt?.title === prompt.title &&
+      selectedRunningbordPrompt?.modelId === prompt.modelId
     );
   };
 
@@ -188,14 +188,14 @@ export const PluelyPrompts = () => {
     return (
       <div className="space-y-4 mt-6">
         <Header
-          title="Pluely Default Prompts"
+          title="Runningbord Default Prompts"
           description="Pre-configured prompts with optimal model selection"
         />
         <Empty
           isLoading={true}
           icon={Sparkles}
           title="Loading prompts..."
-          description="Fetching Pluely default prompts"
+          description="Fetching Runningbord default prompts"
         />
       </div>
     );
@@ -205,7 +205,7 @@ export const PluelyPrompts = () => {
     return (
       <div className="space-y-4 mt-6">
         <Header
-          title="Pluely Default Prompts"
+          title="Runningbord Default Prompts"
           description="Pre-configured prompts with optimal model selection"
         />
         <div className="rounded-lg border border-destructive/20 bg-destructive/10 p-3">
@@ -225,7 +225,7 @@ export const PluelyPrompts = () => {
         <div className="flex items-start gap-3 w-full">
           <div className="flex flex-col gap-1 w-full">
             <Header
-              title="Pluely Default Prompts"
+              title="Runningbord Default Prompts"
               description="Pre-configured prompts with optimal model pairings. Selecting a prompt will automatically set the recommended AI model for best results."
             />
             {lastUpdated && (

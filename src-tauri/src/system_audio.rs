@@ -190,7 +190,7 @@ impl SystemAudioState {
             .map_err(|e| format!("OGG write OpusHead: {}", e))?;
 
             // -- OpusTags --
-            let vendor = b"pluely";
+            let vendor = b"runningbord";
             let mut tags = Vec::new();
             tags.extend_from_slice(b"OpusTags");
             tags.extend_from_slice(&(vendor.len() as u32).to_le_bytes());

@@ -3940,45 +3940,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pluely"
-version = "0.1.9"
-dependencies = [
- "anyhow",
- "base64 0.22.1",
- "dotenv",
- "futures-util",
- "image",
- "objc2 0.6.2",
- "objc2-core-audio",
- "objc2-foundation 0.3.2",
- "ogg",
- "once_cell",
- "opus",
- "reqwest 0.12.23",
- "ringbuf",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-nspanel",
- "tauri-plugin-autostart",
- "tauri-plugin-global-shortcut",
- "tauri-plugin-http",
- "tauri-plugin-keychain",
- "tauri-plugin-machine-uid",
- "tauri-plugin-macos-permissions",
- "tauri-plugin-opener",
- "tauri-plugin-posthog",
- "tauri-plugin-shell",
- "tauri-plugin-sql",
- "tauri-plugin-updater",
- "tokio",
- "tracing",
- "uuid",
- "xcap",
-]
-
-[[package]]
 name = "png"
 version = "0.17.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4676,6 +4637,45 @@ dependencies = [
  "spki",
  "subtle",
  "zeroize",
+]
+
+[[package]]
+name = "runningbord"
+version = "0.1.9"
+dependencies = [
+ "anyhow",
+ "base64 0.22.1",
+ "dotenv",
+ "futures-util",
+ "image",
+ "objc2 0.6.2",
+ "objc2-core-audio",
+ "objc2-foundation 0.3.2",
+ "ogg",
+ "once_cell",
+ "opus",
+ "reqwest 0.12.23",
+ "ringbuf",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-nspanel",
+ "tauri-plugin-autostart",
+ "tauri-plugin-global-shortcut",
+ "tauri-plugin-http",
+ "tauri-plugin-keychain",
+ "tauri-plugin-machine-uid",
+ "tauri-plugin-macos-permissions",
+ "tauri-plugin-opener",
+ "tauri-plugin-posthog",
+ "tauri-plugin-shell",
+ "tauri-plugin-sql",
+ "tauri-plugin-updater",
+ "tokio",
+ "tracing",
+ "uuid",
+ "xcap",
 ]
 
 [[package]]

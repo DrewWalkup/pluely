@@ -170,14 +170,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   // Model speed toggle state (fast/slow) — session-scoped, defaults to "fast"
   const [modelSpeed, setModelSpeed] = useState<"fast" | "slow">("fast");
 
-  // Pluely API State
-  const [pluelyApiEnabled, setPluelyApiEnabledState] = useState<boolean>(
-    safeLocalStorage.getItem(STORAGE_KEYS.PLUELY_API_ENABLED) === "true"
+  // Runningbord API State
+  const [runningbordApiEnabled, setRunningbordApiEnabledState] = useState<boolean>(
+    safeLocalStorage.getItem(STORAGE_KEYS.RUNNINGBORD_API_ENABLED) === "true"
   );
 
   const getActiveLicenseStatus = async () => {
     setHasActiveLicense(true);
-    setPluelyApiEnabled(false);
+    setRunningbordApiEnabled(false);
   };
 
 
@@ -367,12 +367,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    // Load Pluely API enabled state
-    const savedPluelyApiEnabled = safeLocalStorage.getItem(
-      STORAGE_KEYS.PLUELY_API_ENABLED
+    // Load Runningbord API enabled state
+    const savedRunningbordApiEnabled = safeLocalStorage.getItem(
+      STORAGE_KEYS.RUNNINGBORD_API_ENABLED
     );
-    if (savedPluelyApiEnabled !== null) {
-      setPluelyApiEnabledState(savedPluelyApiEnabled === "true");
+    if (savedRunningbordApiEnabled !== null) {
+      setRunningbordApiEnabledState(savedRunningbordApiEnabled === "true");
     }
 
   };
@@ -530,15 +530,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   // Check if the current AI provider/model supports images
   useEffect(() => {
     const checkImageSupport = async () => {
-      if (pluelyApiEnabled) {
-        // For Pluely API, check the selected model's modality
+      if (runningbordApiEnabled) {
+        // For Runningbord API, check the selected model's modality
         try {
           const storage = await invoke<{
-            selected_pluely_model?: string;
+            selected_runningbord_model?: string;
           }>("secure_storage_get");
 
-          if (storage.selected_pluely_model) {
-            const model = JSON.parse(storage.selected_pluely_model);
+          if (storage.selected_runningbord_model) {
+            const model = JSON.parse(storage.selected_runningbord_model);
             const hasImageSupport = model.modality?.includes("image") ?? false;
             setSupportsImages(hasImageSupport);
           } else {
@@ -563,7 +563,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     };
 
     checkImageSupport();
-  }, [pluelyApiEnabled, selectedAIProvider.provider]);
+  }, [runningbordApiEnabled, selectedAIProvider.provider]);
 
   // Sync selected AI to localStorage
   useEffect(() => {
@@ -636,7 +636,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Update supportsImages immediately when provider changes
-    if (!pluelyApiEnabled) {
+    if (!runningbordApiEnabled) {
       const selectedProvider = allAiProviders.find((p) => p.id === provider);
       if (selectedProvider) {
         const hasImageSupport =
@@ -734,18 +734,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     loadData();
   };
 
-  const setPluelyApiEnabled = async (enabled: boolean) => {
-    setPluelyApiEnabledState(enabled);
-    safeLocalStorage.setItem(STORAGE_KEYS.PLUELY_API_ENABLED, String(enabled));
+  const setRunningbordApiEnabled = async (enabled: boolean) => {
+    setRunningbordApiEnabledState(enabled);
+    safeLocalStorage.setItem(STORAGE_KEYS.RUNNINGBORD_API_ENABLED, String(enabled));
 
     if (enabled) {
       try {
         const storage = await invoke<{
-          selected_pluely_model?: string;
+          selected_runningbord_model?: string;
         }>("secure_storage_get");
 
-        if (storage.selected_pluely_model) {
-          const model = JSON.parse(storage.selected_pluely_model);
+        if (storage.selected_runningbord_model) {
+          const model = JSON.parse(storage.selected_runningbord_model);
           const hasImageSupport = model.modality?.includes("image") ?? false;
           setSupportsImages(hasImageSupport);
         } else {
@@ -753,7 +753,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           setSupportsImages(false);
         }
       } catch (error) {
-        console.debug("Failed to check Pluely model image support:", error);
+        console.debug("Failed to check Runningbord model image support:", error);
         setSupportsImages(false);
       }
     } else {
@@ -793,8 +793,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     toggleAlwaysOnTop,
     toggleAutostart,
     loadData,
-    pluelyApiEnabled,
-    setPluelyApiEnabled,
+    runningbordApiEnabled,
+    setRunningbordApiEnabled,
     hasActiveLicense,
     setHasActiveLicense,
     getActiveLicenseStatus,

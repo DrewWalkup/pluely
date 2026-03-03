@@ -67,7 +67,7 @@ export const useMenuItems = () => {
 
     {
       icon: PowerIcon,
-      label: "Quit pluely",
+      label: "Quit runningbord",
       action: async () => {
         await invoke("exit_app");
       },

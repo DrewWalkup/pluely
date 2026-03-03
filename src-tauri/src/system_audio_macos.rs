@@ -246,8 +246,8 @@ unsafe fn build_aggregate_device_dict(tap_uuid_cstr: *const c_char) -> *const c_
     let taps_key = cf_str(b"taps\0");
     let autostart_key = cf_str(b"tapautostart\0");
 
-    let uid_val = cf_str(b"com.pluely.system_audio_tap_agg\0");
-    let name_val = cf_str(b"Pluely System Audio\0");
+    let uid_val = cf_str(b"com.runningbord.system_audio_tap_agg\0");
+    let name_val = cf_str(b"Runningbord System Audio\0");
     let one: i32 = 1;
     let private_val = CFNumberCreate(
         ptr::null(),
