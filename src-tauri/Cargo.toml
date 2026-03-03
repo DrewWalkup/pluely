@@ -60,5 +60,11 @@ objc2 = { version = "0.6", features = ["std"] }
 objc2-core-audio = "0.3"
 objc2-foundation = { version = "0.3", features = ["NSArray", "NSString", "NSUUID", "NSValue", "alloc"] }
 
+[target.'cfg(target_os = "linux")'.dependencies]
+pipewire = "0.9"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+cpal = "0.15"
+
 [target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
 tauri-plugin-autostart = "2.5.0"
