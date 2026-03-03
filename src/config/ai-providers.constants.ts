@@ -39,17 +39,45 @@ export const AI_PROVIDERS = [
     responseContentPath: "choices[0].message.content",
     streaming: true,
   },
-  {
-    id: "gemini",
-    curl: `curl "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" \\
+{
+  id: "gemini",
+  curl: `curl "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" \\
   -H "Authorization: Bearer {{API_KEY}}" \\
   -H "Content-Type: application/json" \\
   -d '{
     "model": "{{MODEL}}",
-    "messages": [{"role": "system", "content": "{{SYSTEM_PROMPT}}"}, {"role": "user", "content": [{"type": "text", "text": "{{TEXT}}"}, {"type": "image_url", "image_url": {"url": "data:image/png;base64,{{IMAGE}}"}}]}]
-  }'}`,
-    responseContentPath: "choices[0].message.content",
-    streaming: true,
+    "stream": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "{{SYSTEM_PROMPT}}"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "{{TEXT}}"
+          },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "data:image/png;base64,{{IMAGE}}"
+            }
+          },
+          {
+            "type": "input_audio",
+            "input_audio": {
+              "data": "{{AUDIO}}",
+              "format": "mp3"
+            }
+          }
+        ]
+      }
+    ]
+  }'`,
+  responseContentPath: "choices[0].delta.content",
+  streaming: true,
   },
 
   {
