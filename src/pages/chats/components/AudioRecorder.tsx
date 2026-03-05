@@ -16,7 +16,7 @@ export const AudioRecorder = ({
   onTranscriptionComplete,
   onCancel,
 }: AudioRecorderProps) => {
-  const { selectedSttProvider, allSttProviders, selectedAudioDevices } =
+  const { selectedSttProvider, allSttProviders, selectedAudioDevices, sttLanguage } =
     useApp();
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
@@ -158,6 +158,7 @@ export const AudioRecorder = ({
         provider: useNyxAPI ? undefined : provider,
         selectedProvider: selectedSttProvider,
         audio: audioBlob,
+        language: sttLanguage,
       });
 
       onTranscriptionComplete(text);

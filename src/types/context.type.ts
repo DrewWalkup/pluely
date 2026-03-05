@@ -69,6 +69,8 @@ export type IContextType = {
 	setCursorType: (type: CursorType) => void;
 	supportsImages: boolean;
 	setSupportsImages: (value: boolean) => void;
+	sttLanguage: string;
+	setSttLanguage: (language: string) => void;
 	modelSpeed: "fast" | "slow";
 	setModelSpeed: (speed: "fast" | "slow") => void;
 };

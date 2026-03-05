@@ -45,7 +45,8 @@ jobs:
             librsvg2-dev patchelf libgtk-3-dev pkg-config \
             libasound2-dev libpulse-dev fuse libfuse2 squashfs-tools \
             xz-utils wget file libglib2.0-dev libgdk-pixbuf2.0-dev libcairo-gobject2 \
-            libayatana-appindicator3-dev ca-certificates binutils
+            libayatana-appindicator3-dev ca-certificates binutils \
+            libpipewire-0.3-dev
           sudo update-ca-certificates -f
 
       - name: Create environment file
@@ -53,7 +54,6 @@ jobs:
           echo "API_ACCESS_KEY=${{ secrets.API_ACCESS_KEY }}" > src-tauri/.env
           echo "PAYMENT_ENDPOINT=${{ secrets.PAYMENT_ENDPOINT }}" >> src-tauri/.env
           echo "APP_ENDPOINT=${{ secrets.APP_ENDPOINT }}" >> src-tauri/.env
-          echo "POSTHOG_API_KEY=${{ secrets.POSTHOG_API_KEY }}" >> src-tauri/.env
 
       - name: Install frontend deps
         run: npm ci
@@ -61,13 +61,13 @@ jobs:
       - name: Build & publish
         uses: tauri-apps/tauri-action@v0.5.16
         env:
+          CMAKE_POLICY_VERSION_MINIMUM: "3.5"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
           API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
           PAYMENT_ENDPOINT: ${{ secrets.PAYMENT_ENDPOINT }}
           APP_ENDPOINT: ${{ secrets.APP_ENDPOINT }}
-          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
         with:
           tagName: app-v__VERSION__
           releaseName: "Pluely v__VERSION__"

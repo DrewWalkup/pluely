@@ -16,6 +16,8 @@ interface MarkdownRendererProps {
   isStreaming?: boolean;
 }
 
+// Streamdown handles HTML sanitization internally via rehype-sanitize (GitHub schema).
+// Script tags, event handlers, and javascript: URLs are all stripped — no additional XSS protection needed.
 export function Markdown({
   children,
   isStreaming = false,

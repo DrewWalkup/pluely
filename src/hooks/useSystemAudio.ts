@@ -41,6 +41,9 @@ export interface VadConfig {
 	max_recording_duration_secs: number;
 }
 
+/** Maximum age (ms) for a transcription to be considered a duplicate from VAD double-fires. */
+const TRANSCRIPTION_DEDUP_WINDOW_MS = 3000;
+
 // OPTIMIZED VAD defaults - matches backend exactly for perfect performance
 const DEFAULT_VAD_CONFIG: VadConfig = {
 	enabled: true,
@@ -113,11 +116,41 @@ export function useSystemAudio() {
 		allAiProviders,
 		systemPrompt,
 		selectedAudioDevices,
+		sttLanguage,
 	} = useApp();
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const isSavingRef = useRef<boolean>(false);
 	const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+	/** Tracks recent transcriptions to prevent duplicate processing from VAD double-fires. */
+	const recentTranscriptionsRef = useRef<{ text: string; timestamp: number }[]>(
+		[],
+	);
+
+	/**
+	 * Checks if a transcription was already processed recently.
+	 * Returns true if the text matches a transcription within the dedup window.
+	 */
+	const isDuplicateTranscription = useCallback((text: string): boolean => {
+		const now = Date.now();
+
+		// Clean up old entries outside the dedup window
+		recentTranscriptionsRef.current = recentTranscriptionsRef.current.filter(
+			(entry) => now - entry.timestamp < TRANSCRIPTION_DEDUP_WINDOW_MS,
+		);
+
+		// Check if this exact text was recently processed
+		const isDuplicate = recentTranscriptionsRef.current.some(
+			(entry) => entry.text === text,
+		);
+
+		if (!isDuplicate) {
+			recentTranscriptionsRef.current.push({ text, timestamp: now });
+		}
+
+		return isDuplicate;
+	}, []);
 
 	// Load context settings and VAD config from localStorage on mount
 	useEffect(() => {
@@ -287,6 +320,7 @@ export function useSystemAudio() {
 								provider: providerConfig,
 								selectedProvider: selectedSttProvider,
 								audio: audioBlob,
+								language: sttLanguage,
 							});
 
 							const timeoutPromise = new Promise<string>(
@@ -310,6 +344,15 @@ export function useSystemAudio() {
 								]);
 
 								if (transcription.trim()) {
+									// Skip duplicate transcriptions from VAD double-fires
+									if (isDuplicateTranscription(transcription.trim())) {
+										console.debug(
+											"Skipping duplicate transcription:",
+											transcription.trim().substring(0, 50),
+										);
+										return;
+									}
+
 									setLastTranscription(transcription);
 									setError("");
 

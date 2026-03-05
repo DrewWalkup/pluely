@@ -44,6 +44,7 @@ export interface STTParams {
 		variables: Record<string, string>;
 	};
 	audio: File | Blob;
+	language?: string; // ISO 639-1 code (e.g., "en", "de", "zh")
 }
 
 /**
@@ -87,12 +88,13 @@ export async function fetchSTT(params: STTParams): Promise<string> {
 		// }
 
 		// Build variable map
-		const allVariables = {
+		const allVariables: Record<string, string> = {
 			...Object.fromEntries(
 				Object.entries(selectedProvider.variables).map(
 					([key, value]) => [key.toUpperCase(), value],
 				),
 			),
+			LANGUAGE: params.language || "en",
 		};
 
 		// Prepare request
@@ -140,6 +142,9 @@ export async function fetchSTT(params: STTParams): Promise<string> {
 				type: audio.type,
 			});
 			form.append("file", freshBlob, "audio.wav");
+			if (params.language) {
+				form.append("language", params.language);
+			}
 			const headerKeys = Object.keys(headers).map((k) =>
 				k.toUpperCase().replace(/[-_]/g, ""),
 			);
@@ -197,7 +202,7 @@ export async function fetchSTT(params: STTParams): Promise<string> {
 			body = JSON.stringify(deepVariableReplacer(dataObj, allVariables));
 		}
 
-		const fetchFunction = url?.includes("http") ? fetch : tauriFetch;
+		const fetchFunction = tauriFetch;
 
 		// Send request
 		let response: Response;

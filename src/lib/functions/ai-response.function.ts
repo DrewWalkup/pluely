@@ -322,7 +322,7 @@ export async function* fetchAIResponse(params: {
 			}
 		}
 
-		const fetchFunction = url?.includes("http") ? fetch : tauriFetch;
+		const fetchFunction = tauriFetch;
 
 		let response;
 		try {

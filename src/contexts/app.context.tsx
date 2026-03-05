@@ -4,7 +4,7 @@ import {
 	SPEECH_TO_TEXT_PROVIDERS,
 	STORAGE_KEYS,
 } from "@/config";
-import { getPlatform, safeLocalStorage, trackAppStart } from "@/lib";
+import { getPlatform, safeLocalStorage } from "@/lib";
 import { getShortcutsConfig } from "@/lib/storage";
 import {
 	getCustomizableState,
@@ -71,6 +71,100 @@ const validateAndProcessCurlProviders = (
 		return [];
 	}
 };
+
+/** Keys that must never appear in user-provided variable maps (prototype-pollution prevention). */
+const FORBIDDEN_VARIABLE_KEYS = new Set(["__proto__", "constructor", "prototype"]);
+
+/** Returns a typed null-prototype object — safe from prototype-pollution. */
+function createEmptyVariablesById(): Record<string, Record<string, string>> {
+	return Object.create(null) as Record<string, Record<string, string>>;
+}
+
+/**
+ * Strips dangerous keys and non-string values from a raw variable map.
+ * Returns a clean Record<string, string> safe for storage and use.
+ */
+function sanitizeProviderVariables(
+	rawVariables: Record<string, unknown>,
+): Record<string, string> {
+	const sanitized: Record<string, string> = Object.create(null);
+
+	for (const [key, value] of Object.entries(rawVariables)) {
+		if (!FORBIDDEN_VARIABLE_KEYS.has(key) && typeof value === "string") {
+			sanitized[key] = value;
+		}
+	}
+
+	return sanitized;
+}
+
+/**
+ * Parses a JSON string of per-provider variable maps from localStorage.
+ * Each key is a provider ID, each value is a sanitized variable map.
+ * Returns a safe null-proto object on any parse failure.
+ */
+function parseProviderVariablesById(
+	storageValue: string | null,
+): Record<string, Record<string, string>> {
+	if (!storageValue) return createEmptyVariablesById();
+
+	try {
+		const parsed = JSON.parse(storageValue);
+		if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+			return createEmptyVariablesById();
+		}
+
+		const sanitizedResult = createEmptyVariablesById();
+		for (const [providerId, variables] of Object.entries(parsed)) {
+			if (
+				!FORBIDDEN_VARIABLE_KEYS.has(providerId) &&
+				typeof variables === "object" &&
+				variables !== null
+			) {
+				sanitizedResult[providerId] = sanitizeProviderVariables(
+					variables as Record<string, unknown>,
+				);
+			}
+		}
+		return sanitizedResult;
+	} catch {
+		return createEmptyVariablesById();
+	}
+}
+
+/**
+ * Saves current provider variables to localStorage before switching,
+ * and restores previously-saved variables for the new provider.
+ */
+function saveAndRestoreProviderVariables(
+	storageKey: string,
+	currentProviderId: string,
+	currentVariables: Record<string, string>,
+	newProviderId: string,
+	incomingVariables: Record<string, string>,
+): Record<string, string> {
+	// Save current provider's variables before switching
+	if (currentProviderId && Object.keys(currentVariables).length > 0) {
+		const savedVariablesById = parseProviderVariablesById(
+			safeLocalStorage.getItem(storageKey),
+		);
+		savedVariablesById[currentProviderId] = sanitizeProviderVariables(currentVariables);
+		safeLocalStorage.setItem(storageKey, JSON.stringify(savedVariablesById));
+	}
+
+	// Restore previously saved variables for the new provider (if incoming are all empty)
+	if (newProviderId && Object.keys(incomingVariables).every((key) => !incomingVariables[key])) {
+		const savedVariablesById = parseProviderVariablesById(
+			safeLocalStorage.getItem(storageKey),
+		);
+		const previouslySaved = savedVariablesById[newProviderId];
+		if (previouslySaved && Object.keys(previouslySaved).length > 0) {
+			return { ...incomingVariables, ...previouslySaved };
+		}
+	}
+
+	return incomingVariables;
+}
 
 // Create the context
 const AppContext = createContext<IContextType | undefined>(undefined);
@@ -203,6 +297,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 	const setSupportsImages = (value: boolean) => {
 		setSupportsImagesState(value);
 		safeLocalStorage.setItem(STORAGE_KEYS.SUPPORTS_IMAGES, String(value));
+	};
+
+	// STT language preference — persisted, defaults to "en"
+	const [sttLanguage, setSttLanguageState] = useState<string>(() => {
+		return safeLocalStorage.getItem(STORAGE_KEYS.STT_LANGUAGE) || "en";
+	});
+
+	const setSttLanguage = (language: string) => {
+		setSttLanguageState(language);
+		safeLocalStorage.setItem(STORAGE_KEYS.STT_LANGUAGE, language);
 	};
 
 	// Model speed toggle state (fast/slow) — session-scoped, defaults to "fast"
@@ -428,6 +532,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		if (savedNyxApiEnabled !== null) {
 			setNyxApiEnabledState(savedNyxApiEnabled === "true");
 		}
+
+		// Load STT language
+		const savedSttLanguage = safeLocalStorage.getItem(STORAGE_KEYS.STT_LANGUAGE);
+		if (savedSttLanguage) {
+			setSttLanguageState(savedSttLanguage);
+		}
 	};
 
 	const updateCursor = (type: CursorType | undefined) => {
@@ -474,16 +584,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			// Load license and data
 			await getActiveLicenseStatus();
 
-			// Track app start
-			try {
-				const appVersion = await invoke<string>("get_app_version");
-				const storage = await invoke<{
-					instance_id: string;
-				}>("secure_storage_get");
-				await trackAppStart(appVersion, storage.instance_id || "");
-			} catch (error) {
-				console.debug("Failed to track app start:", error);
-			}
 		};
 		// Load data
 		loadData();
@@ -587,7 +687,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 				e.key === STORAGE_KEYS.SYSTEM_PROMPT ||
 				e.key === STORAGE_KEYS.SCREENSHOT_CONFIG ||
 				e.key === STORAGE_KEYS.SYSTEM_AUDIO_DAEMON_CONFIG ||
-				e.key === STORAGE_KEYS.CUSTOMIZABLE
+				e.key === STORAGE_KEYS.CUSTOMIZABLE ||
+				e.key === STORAGE_KEYS.STT_LANGUAGE
 			) {
 				loadData();
 			}
@@ -731,10 +832,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 
+		const restoredVariables = saveAndRestoreProviderVariables(
+			STORAGE_KEYS.AI_PROVIDER_VARIABLES_BY_ID,
+			selectedAIProvider.provider,
+			selectedAIProvider.variables,
+			provider,
+			variables,
+		);
+
 		setSelectedAIProvider((prev) => ({
 			...prev,
 			provider,
-			variables,
+			variables: restoredVariables,
 		}));
 	};
 
@@ -751,7 +860,19 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			return;
 		}
 
-		setSelectedSttProvider((prev) => ({ ...prev, provider, variables }));
+		const restoredVariables = saveAndRestoreProviderVariables(
+			STORAGE_KEYS.STT_PROVIDER_VARIABLES_BY_ID,
+			selectedSttProvider.provider,
+			selectedSttProvider.variables,
+			provider,
+			variables,
+		);
+
+		setSelectedSttProvider((prev) => ({
+			...prev,
+			provider,
+			variables: restoredVariables,
+		}));
 	};
 
 	// Toggle handlers
@@ -897,6 +1018,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		setSupportsImages,
 		screenRecordingPermissionGranted,
 		setScreenRecordingPermission,
+		sttLanguage,
+		setSttLanguage,
 		modelSpeed,
 		setModelSpeed,
 	};
