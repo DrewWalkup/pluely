@@ -48,7 +48,7 @@ fn get_secure_storage_path(app: &AppHandle) -> Result<PathBuf, String> {
 struct SecureStorage {
     license_key: Option<String>,
     instance_id: Option<String>,
-    selected_runningbord_model: Option<String>,
+    selected_nyx_model: Option<String>,
 }
 
 pub async fn get_stored_credentials(
@@ -74,7 +74,7 @@ pub async fn get_stored_credentials(
         .ok_or("Instance ID not found".to_string())?;
 
     let selected_model: Option<Model> = storage
-        .selected_runningbord_model
+        .selected_nyx_model
         .and_then(|json_str| serde_json::from_str(&json_str).ok());
 
     Ok((license_key, instance_id, selected_model))
@@ -128,9 +128,9 @@ pub struct SystemPromptResponse {
     system_prompt: String,
 }
 
-// Runningbord Prompts API
+// Nyx Prompts API
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct RunningbordPrompt {
+pub struct NyxPrompt {
     title: String,
     prompt: String,
     #[serde(rename = "modelId")]
@@ -140,8 +140,8 @@ pub struct RunningbordPrompt {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct RunningbordPromptsResponse {
-    prompts: Vec<RunningbordPrompt>,
+pub struct NyxPromptsResponse {
+    prompts: Vec<NyxPrompt>,
     total: i32,
     #[serde(rename = "last_updated")]
     last_updated: Option<String>,
@@ -969,9 +969,9 @@ pub async fn fetch_models(app: AppHandle) -> Result<Vec<Model>, String> {
     Ok(models_response.models)
 }
 
-// Fetch Runningbord Prompts API
+// Fetch Nyx Prompts API
 #[tauri::command]
-pub async fn fetch_prompts() -> Result<RunningbordPromptsResponse, String> {
+pub async fn fetch_prompts() -> Result<NyxPromptsResponse, String> {
     let app_endpoint = get_app_endpoint()?;
     let api_access_key = get_api_access_key()?;
 
@@ -1017,7 +1017,7 @@ pub async fn fetch_prompts() -> Result<RunningbordPromptsResponse, String> {
         return Err(format!("Server error ({}): {}", status, error_text));
     }
 
-    let prompts_response: RunningbordPromptsResponse = response
+    let prompts_response: NyxPromptsResponse = response
         .json()
         .await
         .map_err(|e| format!("Failed to parse prompts response: {}", e))?;

@@ -47,7 +47,7 @@ fn get_secure_storage_path(app: &AppHandle) -> Result<PathBuf, String> {
 struct SecureStorage {
     license_key: Option<String>,
     instance_id: Option<String>,
-    selected_runningbord_model: Option<String>,
+    selected_nyx_model: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -60,7 +60,7 @@ pub struct StorageItem {
 pub struct StorageResult {
     license_key: Option<String>,
     instance_id: Option<String>,
-    selected_runningbord_model: Option<String>,
+    selected_nyx_model: Option<String>,
 }
 
 #[tauri::command]
@@ -77,9 +77,9 @@ pub async fn secure_storage_save(app: AppHandle, items: Vec<StorageItem>) -> Res
 
     for item in items {
         match item.key.as_str() {
-            "runningbord_license_key" => storage.license_key = Some(item.value),
-            "runningbord_instance_id" => storage.instance_id = Some(item.value),
-            "selected_runningbord_model" => storage.selected_runningbord_model = Some(item.value),
+            "nyx_license_key" => storage.license_key = Some(item.value),
+            "nyx_instance_id" => storage.instance_id = Some(item.value),
+            "selected_nyx_model" => storage.selected_nyx_model = Some(item.value),
             _ => return Err(format!("Invalid storage key: {}", item.key)),
         }
     }
@@ -101,7 +101,7 @@ pub async fn secure_storage_get(app: AppHandle) -> Result<StorageResult, String>
         return Ok(StorageResult {
             license_key: None,
             instance_id: None,
-            selected_runningbord_model: None,
+            selected_nyx_model: None,
         });
     }
 
@@ -114,7 +114,7 @@ pub async fn secure_storage_get(app: AppHandle) -> Result<StorageResult, String>
     Ok(StorageResult {
         license_key: storage.license_key,
         instance_id: storage.instance_id,
-        selected_runningbord_model: storage.selected_runningbord_model,
+        selected_nyx_model: storage.selected_nyx_model,
     })
 }
 
@@ -134,9 +134,9 @@ pub async fn secure_storage_remove(app: AppHandle, keys: Vec<String>) -> Result<
 
     for key in keys {
         match key.as_str() {
-            "runningbord_license_key" => storage.license_key = None,
-            "runningbord_instance_id" => storage.instance_id = None,
-            "selected_runningbord_model" => storage.selected_runningbord_model = None,
+            "nyx_license_key" => storage.license_key = None,
+            "nyx_instance_id" => storage.instance_id = None,
+            "selected_nyx_model" => storage.selected_nyx_model = None,
             _ => return Err(format!("Invalid storage key: {}", key)),
         }
     }

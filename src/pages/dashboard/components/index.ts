@@ -1,2 +1,2 @@
-export * from "./RunningbordApiSetup";
+export * from "./NyxApiSetup";
 export * from "./Usage";
