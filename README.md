@@ -1,45 +1,19 @@
-# Pluely 🚀
-
-<a href="https://pluely.com/">
-  <img src="/images/app-image.png" alt="pluely banner" width="100%" />
-</a>
+# Nyx
 
 ---
 
-[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-blue)](https://github.com/iamsrikanthnani/pluely)
+[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-blue)](https://github.com/DrewWalkup/pluely)
 [![Tauri](https://img.shields.io/badge/Built%20with-Tauri-orange)](https://tauri.app/)
 [![React](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-blue)](https://reactjs.org/)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
-### 💝 **Support the Project & Connect**
-
-[![Buy Me a Coffee](https://img.shields.io/badge/☕%20Buy%20Me%20a%20Coffee-Support%20Project-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://www.buymeacoffee.com/srikanthnani) &nbsp; [![Hire Me](https://img.shields.io/badge/💼%20Hire%20Me-Let's%20Connect-6366f1?style=for-the-badge&logo=gmail&logoColor=white)](mailto:srikanthnani1202@gmail.com?subject=Hiring%20Inquiry%20-%20Let's%20Connect&body=Hi%20Srikanth,%0D%0A%0D%0AI%20discovered%20your%20project%20Pluely%20I'm%20reaching%20out%20to%20discuss%20potential%20opportunities.%0D%0A%0D%0ABest%20regards,%0D%0A[Your%20Name]) &nbsp; [![Join Pluely](https://img.shields.io/badge/🤝%20Join%20Pluely-Let's%20connect-1e88e5?style=for-the-badge)](mailto:support@pluely.com?subject=Joining%20Pluely%20Inquiry&body=%5Badd%20your%20text%20here%5D%0D%0A%0D%0A---%0D%0APlease%20include%20links%20to%20your%20work%20or%20portfolio%2C%20and%20why%20are%20you%20intrested%20to%20join%20pluely.%20%20%0D%0AWe%20are%20primarily%20looking%20for%20marketing%20professionals%2C%20content%20writers%2C%20interns%2C%20and%20creative%20collaborators%20-%20but%20are%20open%20to%20all%20areas%20of%20expertise.%20%20%0D%0AWe%27ll%20be%20in%20touch%20if%20your%20profile%20is%20a%20good%20fit.)
-
 **Socials:**
-[![GitHub](https://img.shields.io/badge/GitHub-iamsrikanthnani-black?style=flat&logo=github)](https://github.com/iamsrikanthnani)
-[![Twitter](https://img.shields.io/badge/Twitter-@truly__sn-1DA1F2?style=flat&logo=twitter)](https://x.com/srikanthnani)
-[![Website](https://img.shields.io/badge/Website-srikanthnani.com-blue?style=flat&logo=globe)](https://www.srikanthnani.com/)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-iamsrikanthnani-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/iamsrikanthnani/)
+[![GitHub](https://img.shields.io/badge/GitHub-drewwalkup-black?style=flat&logo=github)](https://github.com/DrewWalkup)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-drewwalkup-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/drewwalkup/)
 
 </div>
 
-> **The Open Source Alternative to Cluely** - A lightning-fast, privacy-first AI assistant that works seamlessly during meetings, interviews, and conversations without anyone knowing.
-
-This is the **open source version** of the $15M company [Cluely](https://cluely.com/) 🎯. Experience the same powerful real-time AI assistance, but with complete transparency, privacy, and customization control.
-
-## 📥 **Download Pluely**
-
-<div align="center">
-
-### 🚀 **Get the Latest Release**
-
-[![Download for macOS](https://img.shields.io/badge/Download%20for-macOS-000000?style=for-the-badge&logo=apple&logoColor=white)](https://pluely.com/download/macos) &nbsp; [![Download for Linux](https://img.shields.io/badge/Download%20for-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://pluely.com/download/linux) &nbsp; [![Download for Windows](https://img.shields.io/badge/Download%20for-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://pluely.com/download/windows)
-
-[![GitHub Release](https://img.shields.io/github/v/release/iamsrikanthnani/pluely?style=for-the-badge&logo=github&label=Latest%20Version)](https://pluely.com/releases) &nbsp; [![GitHub Downloads](https://img.shields.io/github/downloads/iamsrikanthnani/pluely/total?style=for-the-badge&logo=github&label=Total%20Downloads)](https://pluely.com/downloads)
-
-**Available formats:** `.dmg` (macOS) • `.msi` (Windows) • `.exe` (Windows) • `.deb` (Linux) • `.rpm` (Linux) • `.AppImage` (Linux)
-
-</div>
+> **An Open Source Alternative to Cluely** - A lightning-fast, privacy-first AI assistant that works seamlessly during meetings, interviews, and conversations.
 
 ---
 
@@ -59,9 +33,9 @@ This is the **open source version** of the $15M company [Cluely](https://cluely.
 
 </div>
 
-#### 📊 **Pluely vs Original Cluely**
+#### 📊 **Nyx vs Original Cluely**
 
-|       Feature       |   🟢 **Pluely (Open Source)**   |      🔴 **Original Cluely**       |
+|       Feature       |    🟢 **Nyx (Open Source)**     |      🔴 **Original Cluely**       |
 | :-----------------: | :-----------------------------: | :-------------------------------: |
 |    **App Size**     |          **~10MB** ⚡           |           **~270MB** 🐌           |
 | **Size Difference** |       **27x Smaller** 🪶        | Bloated with unnecessary overhead |
@@ -76,7 +50,7 @@ This is the **open source version** of the $15M company [Cluely](https://cluely.
 
 ## Invisibility Mode
 
-Pluely operates with complete stealth during sensitive scenarios. The application features a translucent overlay window that sits above all other applications, making it invisible in video calls, screen shares, and recordings. The window is designed to be screenshot-proof and undetectable in meeting platforms like Zoom, Google Meet, Microsoft Teams, and Slack Huddles. When sharing your screen or recording, Pluely remains invisible to your audience while providing you with real-time AI assistance.
+Nyx operates with complete stealth during sensitive scenarios. The application features a translucent overlay window that sits above all other applications, making it invisible in video calls, screen shares, and recordings. The window is designed to be screenshot-proof and undetectable in meeting platforms like Zoom, Google Meet, Microsoft Teams, and Slack Huddles. When sharing your screen or recording, Nyx remains invisible to your audience while providing you with real-time AI assistance.
 
 ## System Audio Capture
 
@@ -96,7 +70,7 @@ Voice input can be used in the main overlay window or within chat conversations 
 
 ## Screenshot Capture
 
-Capture screenshots and send them to AI for visual analysis. Pluely offers two screenshot modes:
+Capture screenshots and send them to AI for visual analysis. Nyx offers two screenshot modes:
 
 **Screenshot Mode:** Capture the entire screen with a single click. The full screen is captured instantly and can be processed by AI.
 
@@ -114,17 +88,17 @@ Configure your preferred screenshot mode and processing behavior in the Screensh
 
 ## File Attachments
 
-Attach files to your AI conversations for analysis, review, or context. Pluely supports attaching multiple files at once, allowing you to send documents, images, code files, or any text-based content to the AI. Files are displayed as chips with file type indicators and can be removed individually or cleared all at once.
+Attach files to your AI conversations for analysis, review, or context. Nyx supports attaching multiple files at once, allowing you to send documents, images, code files, or any text-based content to the AI. Files are displayed as chips with file type indicators and can be removed individually or cleared all at once.
 
 Drag and drop files directly into the input area, or use the file attachment button to browse and select files from your system. Attached files are processed and sent alongside your text prompt to provide context for AI responses.
 
-# Pluely Dashboard
+# Nyx Dashboard
 
-The Pluely Dashboard provides comprehensive access to all features and settings through an intuitive sidebar navigation. Access the dashboard using the keyboard shortcut `Cmd+Shift+D` (macOS) / `Ctrl+Shift+D` (Windows/Linux).
+The Nyx Dashboard provides comprehensive access to all features and settings through an intuitive sidebar navigation. Access the dashboard using the keyboard shortcut `Cmd+Shift+D` (macOS) / `Ctrl+Shift+D` (Windows/Linux).
 
 ## Dashboard
 
-The main dashboard displays your Pluely license status and usage statistics. Activate your license key to unlock faster AI responses, premium features, and priority support. View your token usage and API activity over time with detailed charts showing daily consumption patterns. Refresh your activity data to see real-time updates of your API usage.
+The main dashboard displays your Nyx license status and usage statistics. Activate your license key to unlock faster AI responses, premium features, and priority support. View your token usage and API activity over time with detailed charts showing daily consumption patterns. Refresh your activity data to see real-time updates of your API usage.
 
 ## Chats
 
@@ -163,11 +137,11 @@ Configure core application behavior and appearance:
 
 **Theme Settings:** Switch between light, dark, and system themes. The theme applies globally across the entire application including the overlay window and dashboard.
 
-**Autostart:** Enable or disable automatic launch when your system starts. When enabled, Pluely launches silently in the background and is ready to use immediately.
+**Autostart:** Enable or disable automatic launch when your system starts. When enabled, Nyx launches silently in the background and is ready to use immediately.
 
-**App Icon Visibility:** Control whether the Pluely icon appears in your dock or taskbar. Hide the icon for maximum stealth during sensitive scenarios, or keep it visible for easy access.
+**App Icon Visibility:** Control whether the Nyx icon appears in your dock or taskbar. Hide the icon for maximum stealth during sensitive scenarios, or keep it visible for easy access.
 
-**Always On Top Mode:** Control whether the overlay window stays above all other applications. When enabled, Pluely remains visible regardless of which application you're using. Disable to allow the window to behave like normal applications.
+**Always On Top Mode:** Control whether the overlay window stays above all other applications. When enabled, Nyx remains visible regardless of which application you're using. Disable to allow the window to behave like normal applications.
 
 ## Responses
 
@@ -210,7 +184,7 @@ Manage cursor visibility and customize keyboard shortcuts:
 
 **Cursor Settings:**
 
-- Invisible: Completely hide the cursor when hovering over Pluely (not supported on Linux)
+- Invisible: Completely hide the cursor when hovering over Nyx (not supported on Linux)
 - Default: Standard cursor appearance
 - Auto: Cursor automatically changes based on context (pointer, text cursor, or default)
 
@@ -218,7 +192,7 @@ Manage cursor visibility and customize keyboard shortcuts:
 
 - **Toggle Dashboard:** Open or close the dashboard window (Default: `Cmd+Shift+D` / `Ctrl+Shift+D`)
 - **Toggle Window:** Show or hide the main overlay window (Default: `Cmd+\` / `Ctrl+\`)
-- **Refocus Input Box:** Bring Pluely forward and focus the input area (Default: `Cmd+Shift+I` / `Ctrl+Shift+I`)
+- **Refocus Input Box:** Bring Nyx forward and focus the input area (Default: `Cmd+Shift+I` / `Ctrl+Shift+I`)
 - **Move Window:** Hold modifier key and use arrow keys to move the overlay window continuously (Default: `Cmd` / `Ctrl`)
 - **System Audio:** Toggle system audio capture on or off (Default: `Cmd+Shift+M` / `Ctrl+Shift+M`)
 - **Voice Input:** Start voice recording for speech-to-text (Default: `Cmd+Shift+A` / `Ctrl+Shift+A`)
@@ -236,7 +210,7 @@ Configure AI language model providers from a comprehensive list of pre-configure
 
 **Custom AI Provider Setup:**
 
-Add any LLM provider using curl commands. Pluely supports full streaming and non-streaming capabilities with complete flexibility:
+Add any LLM provider using curl commands. Nyx supports full streaming and non-streaming capabilities with complete flexibility:
 
 1. Enter your curl command with the API endpoint and request structure
 2. Configure authentication using Bearer tokens, API keys, or custom headers
@@ -244,7 +218,7 @@ Add any LLM provider using curl commands. Pluely supports full streaming and non
 4. Toggle streaming support for real-time response generation
 5. Create custom variables using `{{VARIABLE_NAME}}` format in your curl command
 
-**Dynamic Variables:** Pluely automatically replaces these variables in your requests:
+**Dynamic Variables:** Nyx automatically replaces these variables in your requests:
 
 - `{{TEXT}}` - User's text input
 - `{{IMAGE}}` - Base64 encoded image data
@@ -302,17 +276,17 @@ The Dev Space allows complete flexibility to integrate any AI or STT service tha
 
 ---
 
-## Why Pluely?
+## Why Nyx?
 
-Pluely redefines what an AI assistant can be. Built from the ground up with privacy, performance, and discretion in mind, it delivers enterprise-grade capabilities without compromising your data security or system resources.
+Nyx redefines what an AI assistant can be. Built from the ground up with privacy, performance, and discretion in mind, it delivers enterprise-grade capabilities without compromising your data security or system resources.
 
 ## Complete Invisibility
 
-Pluely operates with absolute stealth. The application features a translucent overlay window that sits seamlessly above all other applications, making it invisible to everyone except you.
+Nyx operates with absolute stealth. The application features a translucent overlay window that sits seamlessly above all other applications, making it invisible to everyone except you.
 
 **Undetectable Everywhere:**
 
-The overlay window is designed to be invisible in video calls, screen shares, recordings, and screenshots. When you share your screen in Zoom, Google Meet, Microsoft Teams, or any other meeting platform, Pluely remains completely hidden from your audience. The translucent design makes it extremely difficult to capture in screenshots, and it won't appear on projectors or shared screens.
+The overlay window is designed to be invisible in video calls, screen shares, recordings, and screenshots. When you share your screen in Zoom, Google Meet, Microsoft Teams, or any other meeting platform, Nyx remains completely hidden from your audience. The translucent design makes it extremely difficult to capture in screenshots, and it won't appear on projectors or shared screens.
 
 **Perfect Stealth Design:**
 
@@ -320,11 +294,11 @@ The window transparency can be adjusted to your preference, allowing you to see 
 
 **Critical Use Cases:**
 
-Use Pluely confidently during job interviews to get real-time information without detection. Access product details instantly during sales calls while maintaining professionalism. Reference documentation during technical meetings without breaking your flow. Get learning assistance during educational presentations that's completely invisible to your audience. Analyze screenshots and get suggestions during design reviews without anyone knowing. Debug code and get syntax help during live coding sessions in complete stealth.
+Use Nyx confidently during job interviews to get real-time information without detection. Access product details instantly during sales calls while maintaining professionalism. Reference documentation during technical meetings without breaking your flow. Get learning assistance during educational presentations that's completely invisible to your audience. Analyze screenshots and get suggestions during design reviews without anyone knowing. Debug code and get syntax help during live coding sessions in complete stealth.
 
 ## Privacy-First Architecture
 
-Your data stays yours. Pluely is engineered with privacy as the foundation, not an afterthought.
+Your data stays yours. Nyx is engineered with privacy as the foundation, not an afterthought.
 
 **Local Storage:**
 
@@ -340,11 +314,11 @@ License keys and sensitive credentials are stored in encrypted secure storage in
 
 **Zero Server Dependency:**
 
-Pluely makes API calls directly from your device to your chosen AI provider. There are no proxy servers, no middleware, and no data collection. Your conversations go straight from your device to OpenAI, Anthropic, Google, or whichever provider you choose. You can inspect every network request in your browser's developer tools to verify this claim.
+Nyx makes API calls directly from your device to your chosen AI provider. There are no proxy servers, no middleware, and no data collection. Your conversations go straight from your device to OpenAI, Anthropic, Google, or whichever provider you choose. You can inspect every network request in your browser's developer tools to verify this claim.
 
 **No Telemetry:**
 
-Pluely has no analytics, no usage tracking, no data collection, and no telemetry of any kind. Your usage patterns, conversations, and behavior remain completely private. The application doesn't phone home, doesn't report statistics, and doesn't collect any information about how you use it.
+Nyx has no analytics, no usage tracking, no data collection, and no telemetry of any kind. Your usage patterns, conversations, and behavior remain completely private. The application doesn't phone home, doesn't report statistics, and doesn't collect any information about how you use it.
 
 **Offline Capability:**
 
@@ -352,7 +326,7 @@ The application works without an internet connection for all local features. You
 
 ## Blazing Fast Performance
 
-Built with Tauri and Rust, Pluely delivers native desktop performance that puts web-based alternatives to shame.
+Built with Tauri and Rust, Nyx delivers native desktop performance that puts web-based alternatives to shame.
 
 **Lightweight Binary:**
 
@@ -360,11 +334,11 @@ The entire application is approximately 10MB in size, making it 27 times smaller
 
 **Instant Startup:**
 
-Pluely launches in under 100 milliseconds. There's no splash screen, no loading spinner, and no waiting. Click the icon and it's ready to use immediately. This instant startup makes it perfect for quick queries and impromptu assistance.
+Nyx launches in under 100 milliseconds. There's no splash screen, no loading spinner, and no waiting. Click the icon and it's ready to use immediately. This instant startup makes it perfect for quick queries and impromptu assistance.
 
 **Native Performance:**
 
-Built on Tauri, Pluely runs as a native application using your system's webview. There's no embedded Chromium, no browser overhead, and no unnecessary resource consumption. It uses 50% less RAM compared to Electron apps and has minimal CPU impact even during active use.
+Built on Tauri, Nyx runs as a native application using your system's webview. There's no embedded Chromium, no browser overhead, and no unnecessary resource consumption. It uses 50% less RAM compared to Electron apps and has minimal CPU impact even during active use.
 
 **Efficient Resource Usage:**
 
@@ -372,11 +346,11 @@ The application typically uses less than 50MB of RAM during normal operation. Sy
 
 **Cross-Platform:**
 
-Pluely runs natively on macOS, Windows, and Linux with platform-specific optimizations. The same codebase delivers optimal performance on all three platforms, using native system APIs and respecting platform conventions.
+Nyx runs natively on macOS, Windows, and Linux with platform-specific optimizations. The same codebase delivers optimal performance on all three platforms, using native system APIs and respecting platform conventions.
 
 ## Complete Control
 
-Own your AI experience. Pluely gives you unprecedented control over every aspect of the application.
+Own your AI experience. Nyx gives you unprecedented control over every aspect of the application.
 
 **Any AI Provider:**
 
@@ -400,7 +374,7 @@ The entire codebase is open source under GPL v3. You can inspect every line of c
 
 ## Always Ready
 
-Pluely sits quietly on your desktop, consuming minimal resources while remaining instantly accessible.
+Nyx sits quietly on your desktop, consuming minimal resources while remaining instantly accessible.
 
 **One-Click Access:**
 
@@ -412,11 +386,11 @@ All conversations are saved locally in SQLite with full context. Return to previ
 
 **Background Operation:**
 
-Pluely can run silently in the background with the overlay hidden. Enable autostart to launch it automatically when your system boots. Hide the dock icon for maximum stealth while keeping the application running and accessible via keyboard shortcuts.
+Nyx can run silently in the background with the overlay hidden. Enable autostart to launch it automatically when your system boots. Hide the dock icon for maximum stealth while keeping the application running and accessible via keyboard shortcuts.
 
 **Zero Maintenance:**
 
-No subscriptions to manage, no accounts to maintain, and no services to configure beyond your AI provider. Once set up, Pluely just works. Updates are delivered automatically when available, and you control when to install them.
+No subscriptions to manage, no accounts to maintain, and no services to configure beyond your AI provider. Once set up, Nyx just works. Updates are delivered automatically when available, and you control when to install them.
 
 ---
 
@@ -442,7 +416,7 @@ This includes essential packages like WebKitGTK (Linux), system libraries, and o
 
 ```bash
 # Clone the repository
-git clone https://github.com/iamsrikanthnani/pluely.git
+git clone https://github.com/DrewWalkup/pluely.git
 cd pluely
 
 # Install dependencies
@@ -467,33 +441,13 @@ This creates platform-specific installers in `src-tauri/target/release/bundle/`:
 
 ---
 
-## Contributing
+**Extra features:**
 
-We keep contributions focused so Pluely stays lean and reliable.
-
-- ✅ We currently accept bug-fix pull requests and improvements to existing functionality.
-- ❌ We are not accepting feature requests, new AI/STT providers, or large UI overhauls via PR.
-
-### Earn a Lifetime Dev Pro License
-
-Want lifetime access to Pluely Dev Pro (a $120 value)? Head to our contribution hub at [pluely.com/contribute](https://pluely.com/contribute) and tackle one of the critical issues listed there. When your pull request closes an eligible GitHub issue, email the PR link to [support@pluely.com](mailto:support@pluely.com) to claim your reward. Only the issues on that page qualify, and the best-quality submission wins when multiple PRs target the same issue.
-
-### How to Contribute
-
-1. Pick an eligible bug from [pluely.com/contribute](https://pluely.com/contribute) or another open issue that fits the guidelines above.
-2. Fork the repository and create a feature branch.
-3. Fix the bug, add tests where applicable, and submit a clear PR description.
-4. Email your PR link to [support@pluely.com](mailto:support@pluely.com) if it resolves a bounty issue.
-
-> 💡 **Like this project?** Consider [buying me a coffee ☕](https://www.buymeacoffee.com/srikanthnani) or [hiring me](mailto:srikanthnani1202@gmail.com?subject=Hiring%20Inquiry%20-%20Pluely%20Developer) for your next project!
-
-### **Contributing Guidelines**
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+- Completely stripped off license logic with updater logic removed to avoid conflicts.
+- Auto screenshot upload with automatic prompt on key press
+- Multi-Modal Gemini Support(in built audio, image)
+- Ability to attach system audio automatically in compressed opus 16khz mono form to get quick insights while using auto screenshot upload feature (Only supported for Macs, will look into windows/linux later)
+- Ability to choose between fast and slow models(pro, reasoning etc.) through chat ui toggle if specified in dev space/dashboard settings.
 
 ---
 
@@ -505,6 +459,8 @@ This project is licensed under the **GNU General Public License v3.0** - see the
 
 ## 🙏 Acknowledgments
 
+- **[Runningbord](https://github.com/devporter007/pluely)** - App cleanup
+- **[Pluely](https://github.com/iamsrikanthnani/pluely)** - Original repo
 - **[Cluely](https://cluely.com/)** - Inspiration for this open source alternative
 - **[Tauri](https://tauri.app/)** - Amazing desktop framework
 - **[tauri-nspanel](https://github.com/ahkohd/tauri-nspanel)** - macOS native panel integration for Tauri
@@ -515,28 +471,94 @@ This project is licensed under the **GNU General Public License v3.0** - see the
 - **[xAI](https://x.ai/)** - Grok AI models
 - **[Google](https://gemini.google.com/)** - Gemini AI models
 
----
+## TODO
 
-## 🔗 Links
+Please perform the manual verification steps from the plan:
 
-- **Website**: [pluely.com](https://pluely.com/) (Pluely website)
-- **Website**: [cluely.com](https://cluely.com/) (Original Cluely)
-- **Documentation**: [GitHub Wiki](https://github.com/iamsrikanthnani/pluely/wiki)
-- **Issues**: [GitHub Issues](https://github.com/iamsrikanthnani/pluely/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/iamsrikanthnani/pluely/discussions)
+- npm run tauri dev — app launches, both windows render
+- Mic button visible in completion bar alongside system audio toggle
+- Clicking mic button opens speech panel with recording controls
+- VAD auto-record mode works when enabled
+- Waveform visualizer displays audio levels during recording
+- Transcription results appear after recording stops
+- Speech panel closes cleanly and returns to completion bar
+- System audio daemon toggle still enables/disables passive capture
+- Screenshot + system audio capture still works (screenshot with audio attachment)
+- Audio settings page accessible from sidebar, shows device selection
+- Chat history shows audio recording and playback components
+- Keyboard shortcut for audio recording works (Cmd+Shift+A)
+- No console errors related to audio components
 
----
+They're independent features that serve different purposes:
 
-### 🌐 **Let's Connect**
+Speaker Module (Mic/System Audio Capture + STT)
 
-[![GitHub](https://img.shields.io/badge/GitHub-iamsrikanthnani-black?style=for-the-badge&logo=github)](https://github.com/iamsrikanthnani)&nbsp;
-[![Twitter](https://img.shields.io/badge/Twitter-@truly__sn-black?style=for-the-badge&logo=twitter)](https://x.com/srikanthnani)&nbsp;
-[![Website](https://img.shields.io/badge/Website-srikanthnani.com-black?style=for-the-badge&logo=globe)](https://www.srikanthnani.com/)&nbsp;
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-iamsrikanthnani-black?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/iamsrikanthnani/)&nbsp;
-[![License](https://img.shields.io/badge/License-GPL%20v3-black?style=for-the-badge&logo=gnu&logoColor=white)](LICENSE)
+- Triggered by the mic button in the completion bar, or Cmd+Shift+A
+- Opens the speech panel which replaces the completion bar while active
+- Captures system audio output (loopback) in real-time
+- Runs VAD (voice activity detection) to detect speech
+- Sends detected speech to your STT provider for transcription
+- Result: text gets inserted into the input
 
----
+System Audio Daemon (Passive Capture)
 
-**Made with ❤️ by [Srikanth Nani](https://www.srikanthnani.com/)**
+- Triggered by the toggle button in the completion bar, or Cmd+Shift+M
+- Runs silently in the background — no panel, no UI takeover
+- Captures system audio into a ring buffer continuously
+- When you take a screenshot, the last N seconds of audio are extracted as OGG/Opus and attached to the screenshot as
+  context for the AI
+- Result: raw audio attached to multimodal AI requests
 
-_Experience the power of Cluely, but with complete transparency and control over your data._
+In practice:
+
+- You can use either independently — they don't interfere with each other
+- You could even run both simultaneously (though the plan notes potential device contention on some platforms)
+- They have completely separate controls, separate Rust backends, and separate keyboard shortcuts
+- Think of it as: speaker module = "transcribe what I hear into text", daemon = "give the AI audio context with my
+  screenshots"
+
+Dev Space (/dev-space)
+
+AI Providers — Configure your LLM backend:
+
+- Add an API key for your provider (OpenAI, Anthropic, etc.)
+- Select a model that matches your needs:
+    - Text + Image: Any vision model (e.g., gpt-4o, claude-sonnet-4-20250514)
+    - Text + Image + Audio: gpt-4o-audio-preview or similar multimodal model
+    - Text only: Any model works
+
+STT Providers — Configure speech-to-text:
+
+- Add an API key for your STT provider (OpenAI Whisper, Deepgram, etc.)
+- This is what the speaker module sends recorded audio to for transcription
+
+Audio Settings (/audio in sidebar)
+
+- Microphone: Select which input device to use for the chat AudioRecorder
+- System Audio: Select which output device the speaker module captures (loopback)
+
+Screenshot Settings (/screenshot in sidebar)
+
+- Configure screenshot capture behavior
+- When system audio daemon is enabled, screenshots will have audio attached
+
+Testing Each Feature
+
+┌────────────────────────────┬────────────────────────────────────────────┬─────────────────────────────────────────┐
+│ Feature │ How to trigger │ Requires │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Mic button (completion │ Click mic icon or Cmd+Shift+A │ STT provider configured │
+│ bar) │ │ │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ System audio daemon │ Click toggle in completion bar or │ Nothing — just works │
+│ │ Cmd+Shift+M │ │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Screenshot + audio │ Take screenshot while daemon is on │ Screenshot + daemon enabled │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Chat audio recording │ Open a chat → click mic icon in input area │ STT provider configured │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ VAD auto-record │ Enable in speech panel's mode switcher │ STT provider + system audio output │
+│ │ │ device │
+└────────────────────────────┴────────────────────────────────────────────┴─────────────────────────────────────────┘
+
+Minimum setup for full testing: One AI provider API key + one STT provider API key + select audio devices.

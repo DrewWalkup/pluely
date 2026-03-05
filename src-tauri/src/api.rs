@@ -48,7 +48,7 @@ fn get_secure_storage_path(app: &AppHandle) -> Result<PathBuf, String> {
 struct SecureStorage {
     license_key: Option<String>,
     instance_id: Option<String>,
-    selected_pluely_model: Option<String>,
+    selected_nyx_model: Option<String>,
 }
 
 pub async fn get_stored_credentials(
@@ -74,7 +74,7 @@ pub async fn get_stored_credentials(
         .ok_or("Instance ID not found".to_string())?;
 
     let selected_model: Option<Model> = storage
-        .selected_pluely_model
+        .selected_nyx_model
         .and_then(|json_str| serde_json::from_str(&json_str).ok());
 
     Ok((license_key, instance_id, selected_model))
@@ -128,9 +128,9 @@ pub struct SystemPromptResponse {
     system_prompt: String,
 }
 
-// Pluely Prompts API
+// Nyx Prompts API
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct PluelyPrompt {
+pub struct NyxPrompt {
     title: String,
     prompt: String,
     #[serde(rename = "modelId")]
@@ -140,8 +140,8 @@ pub struct PluelyPrompt {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct PluelyPromptsResponse {
-    prompts: Vec<PluelyPrompt>,
+pub struct NyxPromptsResponse {
+    prompts: Vec<NyxPrompt>,
     total: i32,
     #[serde(rename = "last_updated")]
     last_updated: Option<String>,
@@ -483,6 +483,7 @@ pub async fn chat_stream_response(
     user_message: String,
     system_prompt: Option<String>,
     image_base64: Option<serde_json::Value>,
+    audio_base64: Option<String>,
     history: Option<String>,
 ) -> Result<String, String> {
     // Get stored credentials to get selected model
@@ -553,6 +554,16 @@ pub async fn chat_stream_response(
                 }
             }
         }
+    }
+
+    // Add audio content if provided
+    if let Some(audio_data) = audio_base64 {
+        user_content.push(serde_json::json!({
+            "type": "audio",
+            "audio": {
+                "url": format!("data:audio/wav;base64,{}", audio_data)
+            }
+        }));
     }
 
     // Add user message
@@ -958,9 +969,9 @@ pub async fn fetch_models(app: AppHandle) -> Result<Vec<Model>, String> {
     Ok(models_response.models)
 }
 
-// Fetch Pluely Prompts API
+// Fetch Nyx Prompts API
 #[tauri::command]
-pub async fn fetch_prompts() -> Result<PluelyPromptsResponse, String> {
+pub async fn fetch_prompts() -> Result<NyxPromptsResponse, String> {
     let app_endpoint = get_app_endpoint()?;
     let api_access_key = get_api_access_key()?;
 
@@ -1006,7 +1017,7 @@ pub async fn fetch_prompts() -> Result<PluelyPromptsResponse, String> {
         return Err(format!("Server error ({}): {}", status, error_text));
     }
 
-    let prompts_response: PluelyPromptsResponse = response
+    let prompts_response: NyxPromptsResponse = response
         .json()
         .await
         .map_err(|e| format!("Failed to parse prompts response: {}", e))?;

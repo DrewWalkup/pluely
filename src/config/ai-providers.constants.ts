@@ -39,18 +39,83 @@ export const AI_PROVIDERS = [
     responseContentPath: "choices[0].message.content",
     streaming: true,
   },
-  {
-    id: "gemini",
-    curl: `curl "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" \\
+{
+  id: "gemini",
+  curl: `curl "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions" \\
   -H "Authorization: Bearer {{API_KEY}}" \\
   -H "Content-Type: application/json" \\
   -d '{
     "model": "{{MODEL}}",
-    "messages": [{"role": "system", "content": "{{SYSTEM_PROMPT}}"}, {"role": "user", "content": [{"type": "text", "text": "{{TEXT}}"}, {"type": "image_url", "image_url": {"url": "data:image/png;base64,{{IMAGE}}"}}]}]
-  }'}`,
-    responseContentPath: "choices[0].message.content",
-    streaming: true,
+    "stream": true,
+    "messages": [
+      {
+        "role": "system",
+        "content": "{{SYSTEM_PROMPT}}"
+      },
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "{{TEXT}}"
+          },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "data:image/png;base64,{{IMAGE}}"
+            }
+          },
+          {
+            "type": "input_audio",
+            "input_audio": {
+              "data": "{{AUDIO}}",
+              "format": "mp3"
+            }
+          }
+        ]
+      }
+    ]
+  }'`,
+  responseContentPath: "choices[0].delta.content",
+  streaming: true,
   },
+
+  {
+    id: "gemini-multimodal",
+    curl: `curl 'https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent' \
+  -H "Content-Type: application/json" \
+  -H "x-goog-api-key: {{API_KEY}}" \
+  -X POST \
+  -d '{
+    "systemInstruction": {
+      "parts": [{"text": "{{SYSTEM_PROMPT}}"}]
+    },
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {"text": "{{TEXT}}"},
+          {
+            "inline_data": {
+              "mime_type": "image/png", 
+              "data": "{{IMAGE}}"
+            }
+          },
+          {
+            "inline_data": {
+              "mime_type": "audio/mp3", 
+              "data": "{{AUDIO}}"
+            }
+          }
+
+        ]
+      }
+    ]
+  }'`,
+    responseContentPath: "candidates[0].content.parts[0].text",
+    streaming: false,
+  },
+
   {
     id: "mistral",
     curl: `curl https://api.mistral.ai/v1/chat/completions \\

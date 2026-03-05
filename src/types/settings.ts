@@ -44,6 +44,21 @@ export interface ScreenshotConfig {
   mode: ScreenshotMode;
   autoPrompt: string;
   enabled: boolean;
+
+  // Compression settings: when enabled, screenshots will be resized and encoded as JPEG
+  compressionEnabled?: boolean;
+  // JPEG quality (1-100)
+  compressionQuality?: number;
+  // Maximum dimension (px) for the longest side before resizing
+  compressionMaxDimension?: number;
+  // When true, recompress manually attached images using the same compression settings
+  recompressAttachments?: boolean;
+}
+
+// System audio daemon: passive background recording of last N seconds of system audio
+export interface SystemAudioDaemonConfig {
+  enabled: boolean;
+  bufferSeconds: number; // last N seconds to keep (e.g. 30, 60)
 }
 
 // Speech-to-Text provider types

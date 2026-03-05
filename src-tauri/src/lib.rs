@@ -4,25 +4,39 @@ mod api;
 mod capture;
 mod db;
 mod shortcuts;
+mod speaker;
+mod system_audio;
 mod window;
+
+#[cfg(target_os = "macos")]
+mod system_audio_macos;
+
+#[cfg(target_os = "linux")]
+mod system_audio_linux;
+
+#[cfg(target_os = "windows")]
+mod system_audio_windows;
+
 use std::sync::{Arc, Mutex};
 use tauri::{AppHandle, Manager, WebviewWindow};
 use tauri_plugin_posthog::{init as posthog_init, PostHogConfig, PostHogOptions};
 use tokio::task::JoinHandle;
-mod speaker;
 use capture::CaptureState;
 use speaker::VadConfig;
+use system_audio::SystemAudioState;
 
-#[cfg(target_os = "macos")]
-#[allow(deprecated)]
-use tauri_nspanel::{cocoa::appkit::NSWindowCollectionBehavior, panel_delegate, WebviewWindowExt};
-
+/// State for the speaker module's real-time system audio capture pipeline.
+/// Tracks the active capture task, VAD configuration, and capture status.
 #[derive(Default)]
 pub struct AudioState {
     stream_task: Arc<Mutex<Option<JoinHandle<()>>>>,
     vad_config: Arc<Mutex<VadConfig>>,
     is_capturing: Arc<Mutex<bool>>,
 }
+
+#[cfg(target_os = "macos")]
+#[allow(deprecated)]
+use tauri_nspanel::{cocoa::appkit::NSWindowCollectionBehavior, panel_delegate, WebviewWindowExt};
 
 #[tauri::command]
 fn get_app_version() -> String {
@@ -36,11 +50,12 @@ pub fn run() {
     let mut builder = tauri::Builder::default()
         .plugin(
             tauri_plugin_sql::Builder::default()
-                .add_migrations("sqlite:pluely.db", db::migrations())
+                .add_migrations("sqlite:nyx.db", db::migrations())
                 .build(),
         )
         .manage(AudioState::default())
         .manage(CaptureState::default())
+        .manage(Arc::new(SystemAudioState::new()))
         .manage(shortcuts::WindowVisibility {
             is_hidden: Mutex::new(false),
         })
@@ -48,7 +63,8 @@ pub fn run() {
         .manage(shortcuts::LicenseState::default())
         .manage(shortcuts::MoveWindowState::default())
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_updater::Builder::new().build())
+        // DISABLED: updater plugin — uncomment to re-enable
+        // .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_keychain::init())
         .plugin(tauri_plugin_shell::init()) // Add shell plugin
@@ -97,13 +113,6 @@ pub fn run() {
             activate::secure_storage_save,
             activate::secure_storage_get,
             activate::secure_storage_remove,
-            api::transcribe_audio,
-            api::chat_stream_response,
-            api::fetch_models,
-            api::fetch_prompts,
-            api::create_system_prompt,
-            api::check_license_status,
-            api::get_activity,
             speaker::start_system_audio_capture,
             speaker::stop_system_audio_capture,
             speaker::manual_stop_continuous,
@@ -115,6 +124,18 @@ pub fn run() {
             speaker::get_audio_sample_rate,
             speaker::get_input_devices,
             speaker::get_output_devices,
+            system_audio::system_audio_start,
+            system_audio::system_audio_stop,
+            system_audio::system_audio_get_recent_base64,
+            system_audio::system_audio_is_recording,
+            system_audio::system_audio_status,
+            api::transcribe_audio,
+            api::chat_stream_response,
+            api::fetch_models,
+            api::fetch_prompts,
+            api::create_system_prompt,
+            api::check_license_status,
+            api::get_activity,
         ])
         .setup(|app| {
             // Setup main window positioning

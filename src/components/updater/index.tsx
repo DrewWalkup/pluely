@@ -118,10 +118,10 @@ export const Updater = () => {
     }
   };
 
-  // Check for updates on component mount
-  useEffect(() => {
-    checkForUpdates();
-  }, []);
+  // DISABLED: auto-check for updates on mount — uncomment to re-enable
+  // useEffect(() => {
+  //   checkForUpdates();
+  // }, []);
 
   // Handle window resizing when popover opens/closes
   useEffect(() => {
@@ -270,7 +270,7 @@ export const Updater = () => {
             <p className="text-xs text-muted-foreground">
               Having trouble downloading?{" "}
               <a
-                href={"https://pluely.com/downloads?ref=pluely-app"}
+                href={"https://nyx.com/downloads?ref=nyx-app"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-700 underline inline-flex items-center gap-1"

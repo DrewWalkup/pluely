@@ -59,16 +59,6 @@ export interface UseCompletionReturn {
   /** Direct state setter for advanced use cases */
   setState: Dispatch<SetStateAction<any>>;
 
-  // Voice Activity Detection (VAD) and microphone
-  /** Whether Voice Activity Detection is enabled */
-  enableVAD: boolean;
-  /** Function to toggle VAD state */
-  setEnableVAD: Dispatch<SetStateAction<boolean>>;
-  /** Whether microphone is currently open/active */
-  micOpen: boolean;
-  /** Function to control microphone state */
-  setMicOpen: Dispatch<SetStateAction<boolean>>;
-
   // Conversation management
   /** ID of the currently active conversation, null for new conversation */
   currentConversationId: string | null;
@@ -89,13 +79,31 @@ export interface UseCompletionReturn {
   /** Function to toggle keep engaged mode */
   setKeepEngaged: Dispatch<SetStateAction<boolean>>;
 
+  // Voice Activity Detection (VAD) and microphone
+  /** Whether VAD is enabled for auto-recording */
+  enableVAD: boolean;
+  /** Function to toggle VAD state */
+  setEnableVAD: Dispatch<SetStateAction<boolean>>;
+  /** Whether microphone is currently open/active */
+  micOpen: boolean;
+  /** Function to control microphone state */
+  setMicOpen: Dispatch<SetStateAction<boolean>>;
+
+  // Model speed toggle
+  /** Current model speed: "fast" (default) or "slow" */
+  modelSpeed: "fast" | "slow";
+  /** Function to change model speed */
+  setModelSpeed: (speed: "fast" | "slow") => void;
+  /** Whether a slow model is configured for the current provider */
+  hasSlowModel: boolean;
+
   // Screenshot functionality
   /** Current screenshot configuration settings */
   screenshotConfiguration: any;
   /** Function to update screenshot configuration */
   setScreenshotConfiguration: Dispatch<SetStateAction<any>>;
   /** Function to handle screenshot submission with optional prompt */
-  handleScreenshotSubmit: (base64: string, prompt?: string) => Promise<void>;
+  handleScreenshotSubmit: (base64: string, prompt?: string, audioBase64?: string | undefined, audioTranscription?: string | null) => Promise<void>;
 
   // File selection and keyboard handling
   /** Event handler for file input changes */

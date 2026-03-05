@@ -106,8 +106,8 @@ pub fn handle_shortcut_action<R: Runtime>(app: &AppHandle<R>, action_id: &str) {
         "move_window_down" => handle_move_window(app, "down"),
         "move_window_left" => handle_move_window(app, "left"),
         "move_window_right" => handle_move_window(app, "right"),
-        "audio_recording" => handle_audio_shortcut(app),
         "screenshot" => handle_screenshot_shortcut(app),
+        "audio_recording" => handle_audio_shortcut(app),
         "system_audio" => handle_system_audio_shortcut(app),
         custom_action => {
             // Emit custom action event for frontend to handle
@@ -253,26 +253,6 @@ fn handle_toggle_window<R: Runtime>(app: &AppHandle<R>) {
     }
 }
 
-/// Handle audio shortcut
-fn handle_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
-    if let Some(window) = app.get_webview_window("main") {
-        // Ensure window is visible
-        if let Ok(false) = window.is_visible() {
-            if let Err(_e) = window.show() {
-                return;
-            }
-            if let Err(e) = window.set_focus() {
-                eprintln!("Failed to focus window: {}", e);
-            }
-        }
-
-        // Emit event to start audio recording
-        if let Err(e) = window.emit("start-audio-recording", json!({})) {
-            eprintln!("Failed to emit audio recording event: {}", e);
-        }
-    }
-}
-
 /// Handle screenshot shortcut
 fn handle_screenshot_shortcut<R: Runtime>(app: &AppHandle<R>) {
     if let Some(window) = app.get_webview_window("main") {
@@ -283,21 +263,40 @@ fn handle_screenshot_shortcut<R: Runtime>(app: &AppHandle<R>) {
     }
 }
 
-/// Handle system audio shortcut
-fn handle_system_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
+/// Handle audio recording shortcut — emits event for frontend to start mic capture
+fn handle_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
+    {
+        let license_state = app.state::<LicenseState>();
+        if !license_state.is_active() {
+            eprintln!("Ignoring audio shortcut - license inactive");
+            return;
+        }
+    }
+
     if let Some(window) = app.get_webview_window("main") {
-        // Ensure window is visible
-        if let Ok(false) = window.is_visible() {
-            if let Err(e) = window.show() {
-                eprintln!("Failed to show window: {}", e);
-                return;
-            }
-            if let Err(e) = window.set_focus() {
-                eprintln!("Failed to focus window: {}", e);
-            }
+        // Emit event to start audio recording
+        if let Err(e) = window.emit("start-audio-recording", json!({})) {
+            eprintln!("Failed to emit audio recording event: {}", e);
         }
 
-        // Emit event to toggle system audio capture - frontend will determine current state
+        // Also show and focus the window
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
+}
+
+/// Handle system audio toggle shortcut — emits event for frontend to toggle capture
+fn handle_system_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
+    {
+        let license_state = app.state::<LicenseState>();
+        if !license_state.is_active() {
+            eprintln!("Ignoring system audio shortcut - license inactive");
+            return;
+        }
+    }
+
+    if let Some(window) = app.get_webview_window("main") {
+        // Emit event to toggle system audio capture
         if let Err(e) = window.emit("toggle-system-audio", json!({})) {
             eprintln!("Failed to emit system audio event: {}", e);
         }

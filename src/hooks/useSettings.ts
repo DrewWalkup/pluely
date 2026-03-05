@@ -11,6 +11,8 @@ export const useSettings = () => {
   const {
     screenshotConfiguration,
     setScreenshotConfiguration,
+    systemAudioDaemonConfig,
+    setSystemAudioDaemonConfig,
     allAiProviders,
     allSttProviders,
     selectedAIProvider,
@@ -61,6 +63,64 @@ export const useSettings = () => {
     );
   };
 
+
+  // Compression settings handlers
+  const handleScreenshotCompressionEnabledChange = (enabled: boolean) => {
+    const newConfig = { ...screenshotConfiguration, compressionEnabled: enabled };
+    setScreenshotConfiguration(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SCREENSHOT_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
+  const handleScreenshotCompressionQualityChange = (quality: number) => {
+    const newConfig = { ...screenshotConfiguration, compressionQuality: quality };
+    setScreenshotConfiguration(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SCREENSHOT_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
+  const handleScreenshotCompressionMaxDimChange = (maxDim: number) => {
+    const newConfig = { ...screenshotConfiguration, compressionMaxDimension: maxDim };
+    setScreenshotConfiguration(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SCREENSHOT_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
+  // Whether to recompress manually attached images when adding files
+  const handleScreenshotRecompressAttachmentsChange = (enabled: boolean) => {
+    const newConfig = { ...screenshotConfiguration, recompressAttachments: enabled };
+    setScreenshotConfiguration(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SCREENSHOT_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
+  const handleSystemAudioDaemonEnabledChange = (enabled: boolean) => {
+    const newConfig = { ...systemAudioDaemonConfig, enabled };
+    setSystemAudioDaemonConfig(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SYSTEM_AUDIO_DAEMON_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
+  const handleSystemAudioDaemonBufferSecondsChange = (bufferSeconds: number) => {
+    const clamped = Math.min(300, Math.max(5, bufferSeconds));
+    const newConfig = { ...systemAudioDaemonConfig, bufferSeconds: clamped };
+    setSystemAudioDaemonConfig(newConfig);
+    safeLocalStorage.setItem(
+      STORAGE_KEYS.SYSTEM_AUDIO_DAEMON_CONFIG,
+      JSON.stringify(newConfig)
+    );
+  };
+
   useEffect(() => {
     if (selectedAIProvider.provider) {
       const provider = allAiProviders.find(
@@ -97,9 +157,17 @@ export const useSettings = () => {
   return {
     screenshotConfiguration,
     setScreenshotConfiguration,
+    systemAudioDaemonConfig,
+    setSystemAudioDaemonConfig,
+    handleSystemAudioDaemonEnabledChange,
+    handleSystemAudioDaemonBufferSecondsChange,
     handleScreenshotModeChange,
     handleScreenshotPromptChange,
     handleScreenshotEnabledChange,
+    handleScreenshotCompressionEnabledChange,
+    handleScreenshotCompressionQualityChange,
+    handleScreenshotCompressionMaxDimChange,
+    handleScreenshotRecompressAttachmentsChange,
     allAiProviders,
     allSttProviders,
     selectedAIProvider,

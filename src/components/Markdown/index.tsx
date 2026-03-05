@@ -1,7 +1,15 @@
 import React from "react";
-import { Streamdown } from "streamdown";
+import { Streamdown, defaultRemarkPlugins } from "streamdown";
 import "katex/dist/katex.min.css";
 import { openUrl } from "@tauri-apps/plugin-opener";
+import type { PluggableList } from "unified";
+import remarkMath from "remark-math";
+
+// Extend default remark plugins with remark-math (singleDollarTextMath enabled for LLM output).
+const customRemarkPlugins: PluggableList = [
+  ...Object.values(defaultRemarkPlugins),
+  [remarkMath, { singleDollarTextMath: true }],
+];
 
 interface MarkdownRendererProps {
   children: string;
@@ -16,6 +24,7 @@ export function Markdown({
     <Streamdown
       isAnimating={isStreaming}
       shikiTheme={["github-light", "github-dark"]}
+      remarkPlugins={customRemarkPlugins}
       components={COMPONENTS as any}
       controls={{
         table: true,
