@@ -133,37 +133,54 @@ function parseProviderVariablesById(
 }
 
 /**
- * Saves current provider variables to localStorage before switching,
- * and restores previously-saved variables for the new provider.
+ * Persists a single provider's variables to the per-provider localStorage map.
+ * Called on every variable edit and before provider switches, so no data is lost.
  */
-function saveAndRestoreProviderVariables(
+function persistProviderVariables(
 	storageKey: string,
-	currentProviderId: string,
-	currentVariables: Record<string, string>,
-	newProviderId: string,
+	providerId: string,
+	variables: Record<string, string>,
+): void {
+	if (!providerId) return;
+
+	const hasValues = Object.values(variables).some((value) => Boolean(value));
+	if (!hasValues) return;
+
+	const savedVariablesById = parseProviderVariablesById(
+		safeLocalStorage.getItem(storageKey),
+	);
+	savedVariablesById[providerId] = sanitizeProviderVariables(variables);
+	safeLocalStorage.setItem(storageKey, JSON.stringify(savedVariablesById));
+}
+
+/**
+ * Restores previously-saved variables for a provider.
+ * Merges saved values into any incoming keys that are empty,
+ * so user-provided values always take precedence.
+ */
+function restoreSavedProviderVariables(
+	storageKey: string,
+	providerId: string,
 	incomingVariables: Record<string, string>,
 ): Record<string, string> {
-	// Save current provider's variables before switching
-	if (currentProviderId && Object.keys(currentVariables).length > 0) {
-		const savedVariablesById = parseProviderVariablesById(
-			safeLocalStorage.getItem(storageKey),
-		);
-		savedVariablesById[currentProviderId] = sanitizeProviderVariables(currentVariables);
-		safeLocalStorage.setItem(storageKey, JSON.stringify(savedVariablesById));
+	if (!providerId) return incomingVariables;
+
+	const savedVariablesById = parseProviderVariablesById(
+		safeLocalStorage.getItem(storageKey),
+	);
+	const previouslySaved = savedVariablesById[providerId];
+	if (!previouslySaved || Object.keys(previouslySaved).length === 0) {
+		return incomingVariables;
 	}
 
-	// Restore previously saved variables for the new provider (if incoming are all empty)
-	if (newProviderId && Object.keys(incomingVariables).every((key) => !incomingVariables[key])) {
-		const savedVariablesById = parseProviderVariablesById(
-			safeLocalStorage.getItem(storageKey),
-		);
-		const previouslySaved = savedVariablesById[newProviderId];
-		if (previouslySaved && Object.keys(previouslySaved).length > 0) {
-			return { ...incomingVariables, ...previouslySaved };
+	// Merge: saved values fill in empty incoming keys, explicit values win
+	const merged = { ...incomingVariables };
+	for (const [key, savedValue] of Object.entries(previouslySaved)) {
+		if (!merged[key]) {
+			merged[key] = savedValue;
 		}
 	}
-
-	return incomingVariables;
+	return merged;
 }
 
 // Create the context
@@ -299,9 +316,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		safeLocalStorage.setItem(STORAGE_KEYS.SUPPORTS_IMAGES, String(value));
 	};
 
-	// STT language preference — persisted, defaults to "en"
+	// STT language preference — persisted, defaults to "" (auto-detect)
 	const [sttLanguage, setSttLanguageState] = useState<string>(() => {
-		return safeLocalStorage.getItem(STORAGE_KEYS.STT_LANGUAGE) || "en";
+		return safeLocalStorage.getItem(STORAGE_KEYS.STT_LANGUAGE) || "";
 	});
 
 	const setSttLanguage = (language: string) => {
@@ -757,6 +774,24 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [selectedSttProvider]);
 
+	// Persist AI provider variables to per-provider map on every edit
+	useEffect(() => {
+		persistProviderVariables(
+			STORAGE_KEYS.AI_PROVIDER_VARIABLES_BY_ID,
+			selectedAIProvider.provider,
+			selectedAIProvider.variables,
+		);
+	}, [selectedAIProvider.provider, selectedAIProvider.variables]);
+
+	// Persist STT provider variables to per-provider map on every edit
+	useEffect(() => {
+		persistProviderVariables(
+			STORAGE_KEYS.STT_PROVIDER_VARIABLES_BY_ID,
+			selectedSttProvider.provider,
+			selectedSttProvider.variables,
+		);
+	}, [selectedSttProvider.provider, selectedSttProvider.variables]);
+
 	// Persist system audio daemon config
 	useEffect(() => {
 		safeLocalStorage.setItem(
@@ -832,10 +867,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 
-		const restoredVariables = saveAndRestoreProviderVariables(
+		// Save current provider's variables before switching
+		persistProviderVariables(
 			STORAGE_KEYS.AI_PROVIDER_VARIABLES_BY_ID,
 			selectedAIProvider.provider,
 			selectedAIProvider.variables,
+		);
+
+		// Restore saved variables for the new provider (merges into empty keys)
+		const restoredVariables = restoreSavedProviderVariables(
+			STORAGE_KEYS.AI_PROVIDER_VARIABLES_BY_ID,
 			provider,
 			variables,
 		);
@@ -860,10 +901,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			return;
 		}
 
-		const restoredVariables = saveAndRestoreProviderVariables(
+		// Save current provider's variables before switching
+		persistProviderVariables(
 			STORAGE_KEYS.STT_PROVIDER_VARIABLES_BY_ID,
 			selectedSttProvider.provider,
 			selectedSttProvider.variables,
+		);
+
+		// Restore saved variables for the new provider (merges into empty keys)
+		const restoredVariables = restoreSavedProviderVariables(
+			STORAGE_KEYS.STT_PROVIDER_VARIABLES_BY_ID,
 			provider,
 			variables,
 		);

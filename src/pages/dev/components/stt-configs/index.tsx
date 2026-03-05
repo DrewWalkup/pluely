@@ -5,6 +5,7 @@ import { CustomProviders } from "./CustomProvider";
 import { useApp } from "@/contexts";
 
 const STT_LANGUAGES = [
+  { code: "", label: "Auto-detect" },
   { code: "en", label: "English" },
   { code: "zh", label: "Chinese" },
   { code: "de", label: "German" },
@@ -39,7 +40,7 @@ export const STTProviders = (settings: UseSettingsReturn) => {
       <div className="space-y-2">
         <Header
           title="STT Language"
-          description="Select the language for speech-to-text transcription. This is sent to your STT provider to improve accuracy."
+          description="Select the language for speech-to-text transcription. Auto-detect lets the provider determine the language automatically."
         />
         <Selection
           selected={sttLanguage}

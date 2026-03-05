@@ -94,7 +94,7 @@ export async function fetchSTT(params: STTParams): Promise<string> {
 					([key, value]) => [key.toUpperCase(), value],
 				),
 			),
-			LANGUAGE: params.language || "en",
+			...(params.language ? { LANGUAGE: params.language } : {}),
 		};
 
 		// Prepare request
