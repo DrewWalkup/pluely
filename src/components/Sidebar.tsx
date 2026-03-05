@@ -18,10 +18,10 @@ export const Sidebar = () => {
 				className="flex h-16 items-center px-4 pt-10 gap-1.5"
 			>
 				<div className="flex flex-col">
-					<h1 className="text-xs lg:text-md font-semibold text-foreground transition-all duration-300">
-						Nyx but better
+					<h1 className="text-sm lg:text-md font-semibold text-foreground transition-all duration-300">
+						Nyx
 					</h1>
-					<span className="text-[8px] lg:text-[10px] text-muted-foreground -mt-1 block">
+					<span className="text-xs lg:text-sm text-muted-foreground -mt-1 block">
 						{isLoading ? "Loading..." : `(v${version})`}
 					</span>
 				</div>

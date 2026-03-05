@@ -79,6 +79,16 @@ export interface UseCompletionReturn {
   /** Function to toggle keep engaged mode */
   setKeepEngaged: Dispatch<SetStateAction<boolean>>;
 
+  // Voice Activity Detection (VAD) and microphone
+  /** Whether VAD is enabled for auto-recording */
+  enableVAD: boolean;
+  /** Function to toggle VAD state */
+  setEnableVAD: Dispatch<SetStateAction<boolean>>;
+  /** Whether microphone is currently open/active */
+  micOpen: boolean;
+  /** Function to control microphone state */
+  setMicOpen: Dispatch<SetStateAction<boolean>>;
+
   // Model speed toggle
   /** Current model speed: "fast" (default) or "slow" */
   modelSpeed: "fast" | "slow";

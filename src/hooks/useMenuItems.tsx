@@ -7,6 +7,7 @@ import {
   HomeIcon,
   PowerIcon,
   MessageSquareTextIcon,
+  AudioLinesIcon,
 } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
 import { useApp } from "@/contexts";
@@ -49,6 +50,11 @@ export const useMenuItems = () => {
       icon: MonitorIcon,
       label: "Screenshot",
       href: "/screenshot",
+    },
+    {
+      icon: AudioLinesIcon,
+      label: "Audio",
+      href: "/audio",
     },
     {
       icon: SquareSlashIcon,

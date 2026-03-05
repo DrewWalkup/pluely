@@ -4,6 +4,7 @@ mod api;
 mod capture;
 mod db;
 mod shortcuts;
+mod speaker;
 mod system_audio;
 mod window;
 
@@ -19,8 +20,19 @@ mod system_audio_windows;
 use std::sync::{Arc, Mutex};
 use tauri::{AppHandle, Manager, WebviewWindow};
 use tauri_plugin_posthog::{init as posthog_init, PostHogConfig, PostHogOptions};
+use tokio::task::JoinHandle;
 use capture::CaptureState;
+use speaker::VadConfig;
 use system_audio::SystemAudioState;
+
+/// State for the speaker module's real-time system audio capture pipeline.
+/// Tracks the active capture task, VAD configuration, and capture status.
+#[derive(Default)]
+pub struct AudioState {
+    stream_task: Arc<Mutex<Option<JoinHandle<()>>>>,
+    vad_config: Arc<Mutex<VadConfig>>,
+    is_capturing: Arc<Mutex<bool>>,
+}
 
 #[cfg(target_os = "macos")]
 #[allow(deprecated)]
@@ -41,6 +53,7 @@ pub fn run() {
                 .add_migrations("sqlite:nyx.db", db::migrations())
                 .build(),
         )
+        .manage(AudioState::default())
         .manage(CaptureState::default())
         .manage(Arc::new(SystemAudioState::new()))
         .manage(shortcuts::WindowVisibility {
@@ -100,6 +113,17 @@ pub fn run() {
             activate::secure_storage_save,
             activate::secure_storage_get,
             activate::secure_storage_remove,
+            speaker::start_system_audio_capture,
+            speaker::stop_system_audio_capture,
+            speaker::manual_stop_continuous,
+            speaker::check_system_audio_access,
+            speaker::request_system_audio_access,
+            speaker::get_vad_config,
+            speaker::update_vad_config,
+            speaker::get_capture_status,
+            speaker::get_audio_sample_rate,
+            speaker::get_input_devices,
+            speaker::get_output_devices,
             system_audio::system_audio_start,
             system_audio::system_audio_stop,
             system_audio::system_audio_get_recent_base64,

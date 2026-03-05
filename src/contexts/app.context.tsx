@@ -123,6 +123,30 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 			bufferSeconds: 30,
 		});
 
+	// Selected audio devices for the speaker module (real-time capture)
+	const [selectedAudioDevices, setSelectedAudioDevices] = useState<{
+		input: { id: string; name: string };
+		output: { id: string; name: string };
+	}>(() => {
+		const stored = safeLocalStorage.getItem(
+			STORAGE_KEYS.SELECTED_AUDIO_DEVICES,
+		);
+		if (stored) {
+			try {
+				return JSON.parse(stored);
+			} catch {
+				return {
+					input: { id: "default", name: "Default" },
+					output: { id: "default", name: "Default" },
+				};
+			}
+		}
+		return {
+			input: { id: "default", name: "Default" },
+			output: { id: "default", name: "Default" },
+		};
+	});
+
 	// Unified Customizable State (initialize from persisted storage)
 	const [customizable, setCustomizable] = useState<CustomizableState>(
 		getCustomizableState(),
@@ -640,6 +664,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		);
 	}, [systemAudioDaemonConfig]);
 
+	// Persist selected audio devices
+	useEffect(() => {
+		safeLocalStorage.setItem(
+			STORAGE_KEYS.SELECTED_AUDIO_DEVICES,
+			JSON.stringify(selectedAudioDevices),
+		);
+	}, [selectedAudioDevices]);
+
 	// Apply system audio daemon to backend (start/stop)
 	useEffect(() => {
 		const apply = async () => {
@@ -848,6 +880,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 		setScreenshotConfiguration,
 		systemAudioDaemonConfig,
 		setSystemAudioDaemonConfig,
+		selectedAudioDevices,
+		setSelectedAudioDevices,
 		customizable,
 		toggleAppIconVisibility,
 		toggleAlwaysOnTop,

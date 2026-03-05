@@ -69,6 +69,8 @@ export const useChatCompletion = (
 
 	const [isFilesPopoverOpen, setIsFilesPopoverOpen] = useState(false);
 	const [isScreenshotLoading, setIsScreenshotLoading] = useState(false);
+	const [micOpen, setMicOpen] = useState(false);
+	const [isRecording, setIsRecording] = useState(false);
 
 	const inputRef = useRef<HTMLTextAreaElement | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -829,5 +831,9 @@ export const useChatCompletion = (
 		isScreenshotLoading,
 		messagesEndRef,
 		hasActiveLicense,
+		micOpen,
+		setMicOpen,
+		isRecording,
+		setIsRecording,
 	};
 };

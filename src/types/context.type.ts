@@ -46,6 +46,16 @@ export type IContextType = {
 	setSystemAudioDaemonConfig: React.Dispatch<
 		React.SetStateAction<SystemAudioDaemonConfig>
 	>;
+	selectedAudioDevices: {
+		input: { id: string; name: string };
+		output: { id: string; name: string };
+	};
+	setSelectedAudioDevices: Dispatch<
+		SetStateAction<{
+			input: { id: string; name: string };
+			output: { id: string; name: string };
+		}>
+	>;
 	customizable: CustomizableState;
 	toggleAppIconVisibility: (isVisible: boolean) => Promise<void>;
 	toggleAlwaysOnTop: (isEnabled: boolean) => Promise<void>;

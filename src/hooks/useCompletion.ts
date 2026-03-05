@@ -106,6 +106,8 @@ export const useCompletion = () => {
 	const [isFilesPopoverOpen, setIsFilesPopoverOpen] = useState(false);
 	const [isScreenshotLoading, setIsScreenshotLoading] = useState(false);
 	const [keepEngaged, setKeepEngaged] = useState(false);
+	const [micOpen, setMicOpen] = useState(false);
+	const [enableVAD, setEnableVAD] = useState(false);
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const isProcessingScreenshotRef = useRef(false);
 	const screenshotConfigRef = useRef(screenshotConfiguration);
@@ -904,7 +906,8 @@ export const useCompletion = () => {
 		state.isLoading ||
 		state.response !== "" ||
 		state.error !== null ||
-		keepEngaged;
+		keepEngaged ||
+		micOpen;
 
 	useEffect(() => {
 		resizeWindow(isPopoverOpen || messageHistoryOpen || isFilesPopoverOpen);
@@ -1175,10 +1178,16 @@ export const useCompletion = () => {
 		};
 	}, []);
 
+	const toggleRecording = useCallback(() => {
+		setEnableVAD(!enableVAD);
+		setMicOpen(!micOpen);
+	}, [enableVAD, micOpen]);
+
 	// register callbacks for global shortcuts
 	useEffect(() => {
 		globalShortcuts.registerInputRef(inputRef.current);
 		globalShortcuts.registerScreenshotCallback(captureScreenshot);
+		globalShortcuts.registerAudioCallback(toggleRecording);
 		globalShortcuts.registerCustomShortcutCallback(
 			"toggle_system_audio",
 			() => {
@@ -1202,9 +1211,11 @@ export const useCompletion = () => {
 	}, [
 		globalShortcuts.registerInputRef,
 		globalShortcuts.registerScreenshotCallback,
+		globalShortcuts.registerAudioCallback,
 		globalShortcuts.registerCustomShortcutCallback,
 		globalShortcuts.unregisterCustomShortcutCallback,
 		captureScreenshot,
+		toggleRecording,
 		inputRef,
 		setSystemAudioDaemonConfig,
 		systemAudioDaemonConfig,
@@ -1248,6 +1259,10 @@ export const useCompletion = () => {
 		isScreenshotLoading,
 		keepEngaged,
 		setKeepEngaged,
+		enableVAD,
+		setEnableVAD,
+		micOpen,
+		setMicOpen,
 		modelSpeed,
 		setModelSpeed,
 		hasSlowModel,

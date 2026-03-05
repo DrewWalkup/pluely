@@ -107,6 +107,8 @@ pub fn handle_shortcut_action<R: Runtime>(app: &AppHandle<R>, action_id: &str) {
         "move_window_left" => handle_move_window(app, "left"),
         "move_window_right" => handle_move_window(app, "right"),
         "screenshot" => handle_screenshot_shortcut(app),
+        "audio_recording" => handle_audio_shortcut(app),
+        "system_audio" => handle_system_audio_shortcut(app),
         custom_action => {
             // Emit custom action event for frontend to handle
             if let Some(window) = app.get_webview_window("main") {
@@ -257,6 +259,46 @@ fn handle_screenshot_shortcut<R: Runtime>(app: &AppHandle<R>) {
         // Emit event to trigger screenshot - frontend will determine auto/manual mode
         if let Err(e) = window.emit("trigger-screenshot", json!({})) {
             eprintln!("Failed to emit screenshot event: {}", e);
+        }
+    }
+}
+
+/// Handle audio recording shortcut — emits event for frontend to start mic capture
+fn handle_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
+    {
+        let license_state = app.state::<LicenseState>();
+        if !license_state.is_active() {
+            eprintln!("Ignoring audio shortcut - license inactive");
+            return;
+        }
+    }
+
+    if let Some(window) = app.get_webview_window("main") {
+        // Emit event to start audio recording
+        if let Err(e) = window.emit("start-audio-recording", json!({})) {
+            eprintln!("Failed to emit audio recording event: {}", e);
+        }
+
+        // Also show and focus the window
+        let _ = window.show();
+        let _ = window.set_focus();
+    }
+}
+
+/// Handle system audio toggle shortcut — emits event for frontend to toggle capture
+fn handle_system_audio_shortcut<R: Runtime>(app: &AppHandle<R>) {
+    {
+        let license_state = app.state::<LicenseState>();
+        if !license_state.is_active() {
+            eprintln!("Ignoring system audio shortcut - license inactive");
+            return;
+        }
+    }
+
+    if let Some(window) = app.get_webview_window("main") {
+        // Emit event to toggle system audio capture
+        if let Err(e) = window.emit("toggle-system-audio", json!({})) {
+            eprintln!("Failed to emit system audio event: {}", e);
         }
     }
 }

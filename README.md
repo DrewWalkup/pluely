@@ -470,3 +470,95 @@ This project is licensed under the **GNU General Public License v3.0** - see the
 - **[Anthropic](https://anthropic.com/)** - Claude AI models
 - **[xAI](https://x.ai/)** - Grok AI models
 - **[Google](https://gemini.google.com/)** - Gemini AI models
+
+## TODO
+
+Please perform the manual verification steps from the plan:
+
+- npm run tauri dev — app launches, both windows render
+- Mic button visible in completion bar alongside system audio toggle
+- Clicking mic button opens speech panel with recording controls
+- VAD auto-record mode works when enabled
+- Waveform visualizer displays audio levels during recording
+- Transcription results appear after recording stops
+- Speech panel closes cleanly and returns to completion bar
+- System audio daemon toggle still enables/disables passive capture
+- Screenshot + system audio capture still works (screenshot with audio attachment)
+- Audio settings page accessible from sidebar, shows device selection
+- Chat history shows audio recording and playback components
+- Keyboard shortcut for audio recording works (Cmd+Shift+A)
+- No console errors related to audio components
+
+They're independent features that serve different purposes:
+
+Speaker Module (Mic/System Audio Capture + STT)
+
+- Triggered by the mic button in the completion bar, or Cmd+Shift+A
+- Opens the speech panel which replaces the completion bar while active
+- Captures system audio output (loopback) in real-time
+- Runs VAD (voice activity detection) to detect speech
+- Sends detected speech to your STT provider for transcription
+- Result: text gets inserted into the input
+
+System Audio Daemon (Passive Capture)
+
+- Triggered by the toggle button in the completion bar, or Cmd+Shift+M
+- Runs silently in the background — no panel, no UI takeover
+- Captures system audio into a ring buffer continuously
+- When you take a screenshot, the last N seconds of audio are extracted as OGG/Opus and attached to the screenshot as
+  context for the AI
+- Result: raw audio attached to multimodal AI requests
+
+In practice:
+
+- You can use either independently — they don't interfere with each other
+- You could even run both simultaneously (though the plan notes potential device contention on some platforms)
+- They have completely separate controls, separate Rust backends, and separate keyboard shortcuts
+- Think of it as: speaker module = "transcribe what I hear into text", daemon = "give the AI audio context with my
+  screenshots"
+
+Dev Space (/dev-space)
+
+AI Providers — Configure your LLM backend:
+
+- Add an API key for your provider (OpenAI, Anthropic, etc.)
+- Select a model that matches your needs:
+    - Text + Image: Any vision model (e.g., gpt-4o, claude-sonnet-4-20250514)
+    - Text + Image + Audio: gpt-4o-audio-preview or similar multimodal model
+    - Text only: Any model works
+
+STT Providers — Configure speech-to-text:
+
+- Add an API key for your STT provider (OpenAI Whisper, Deepgram, etc.)
+- This is what the speaker module sends recorded audio to for transcription
+
+Audio Settings (/audio in sidebar)
+
+- Microphone: Select which input device to use for the chat AudioRecorder
+- System Audio: Select which output device the speaker module captures (loopback)
+
+Screenshot Settings (/screenshot in sidebar)
+
+- Configure screenshot capture behavior
+- When system audio daemon is enabled, screenshots will have audio attached
+
+Testing Each Feature
+
+┌────────────────────────────┬────────────────────────────────────────────┬─────────────────────────────────────────┐
+│ Feature │ How to trigger │ Requires │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Mic button (completion │ Click mic icon or Cmd+Shift+A │ STT provider configured │
+│ bar) │ │ │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ System audio daemon │ Click toggle in completion bar or │ Nothing — just works │
+│ │ Cmd+Shift+M │ │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Screenshot + audio │ Take screenshot while daemon is on │ Screenshot + daemon enabled │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ Chat audio recording │ Open a chat → click mic icon in input area │ STT provider configured │
+├────────────────────────────┼────────────────────────────────────────────┼─────────────────────────────────────────┤
+│ VAD auto-record │ Enable in speech panel's mode switcher │ STT provider + system audio output │
+│ │ │ device │
+└────────────────────────────┴────────────────────────────────────────────┴─────────────────────────────────────────┘
+
+Minimum setup for full testing: One AI provider API key + one STT provider API key + select audio devices.

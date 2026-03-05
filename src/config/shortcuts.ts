@@ -61,4 +61,14 @@ export const DEFAULT_SHORTCUT_ACTIONS: ShortcutAction[] = [
 			linux: "ctrl+shift+m",
 		},
 	},
+	{
+		id: "audio_recording",
+		name: "Toggle Audio Recording",
+		description: "Start/stop microphone recording for speech-to-text",
+		defaultKey: {
+			macos: "cmd+shift+a",
+			windows: "ctrl+shift+a",
+			linux: "ctrl+shift+a",
+		},
+	},
 ];
