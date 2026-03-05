@@ -158,7 +158,7 @@ const View = () => {
             const showDate =
               index === 0 ||
               moment(message.timestamp).format("YYYY-MM-DD") !==
-                moment(array[index - 1]?.timestamp).format("YYYY-MM-DD");
+              moment(array[index - 1]?.timestamp).format("YYYY-MM-DD");
 
             return (
               <div key={message.id}>
@@ -174,9 +174,8 @@ const View = () => {
 
                 {/* Message */}
                 <div
-                  className={`flex gap-3 ${
-                    isUser ? "justify-end" : "justify-start"
-                  }`}
+                  className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"
+                    }`}
                 >
                   {/* Avatar - Left side for bot */}
                   {!isUser && (
@@ -189,24 +188,21 @@ const View = () => {
 
                   {/* Message content */}
                   <div
-                    className={`flex flex-col gap-1 max-w-[70%] ${
-                      isUser ? "items-end" : "items-start"
-                    }`}
+                    className={`flex flex-col gap-1 max-w-[70%] ${isUser ? "items-end" : "items-start"
+                      }`}
                   >
                     <Card
-                      className={`p-3 text-xs lg:text-sm transition-all shadow-none ${
-                        isUser
+                      className={`p-3 text-xs lg:text-sm transition-all shadow-none ${isUser
                           ? "!bg-primary text-primary-foreground !border-primary rounded-tr-sm"
                           : "!bg-muted/50 dark:!bg-muted/30 rounded-tl-sm"
-                      }`}
+                        }`}
                     >
                       <Markdown>{message.content}</Markdown>
                     </Card>
                     <Badge
                       variant="outline"
-                      className={`text-[10px] lg:text-xs bg-transparent border-none ${
-                        isUser ? "-mr-1" : "-ml-1"
-                      }`}
+                      className={`text-[10px] lg:text-xs bg-transparent border-none ${isUser ? "-mr-1" : "-ml-1"
+                        }`}
                     >
                       {moment(message.timestamp).format("hh:mm A")}
                     </Badge>
