@@ -9,12 +9,14 @@ export interface ResponseSettings {
   responseLength: string;
   language: string;
   autoScroll: boolean;
+  showThinking: boolean;
 }
 
 export const DEFAULT_RESPONSE_SETTINGS: ResponseSettings = {
   responseLength: DEFAULT_RESPONSE_LENGTH,
   language: DEFAULT_LANGUAGE,
   autoScroll: DEFAULT_AUTO_SCROLL,
+  showThinking: true,
 };
 
 /**
@@ -38,6 +40,10 @@ export const getResponseSettings = (): ResponseSettings => {
         parsedSettings.autoScroll !== undefined
           ? parsedSettings.autoScroll
           : DEFAULT_RESPONSE_SETTINGS.autoScroll,
+      showThinking:
+        parsedSettings.showThinking !== undefined
+          ? parsedSettings.showThinking
+          : DEFAULT_RESPONSE_SETTINGS.showThinking,
     };
   } catch (error) {
     console.error("Failed to get response settings:", error);
@@ -87,6 +93,16 @@ export const updateLanguage = (language: string): ResponseSettings => {
 export const updateAutoScroll = (autoScroll: boolean): ResponseSettings => {
   const currentSettings = getResponseSettings();
   const newSettings = { ...currentSettings, autoScroll };
+  setResponseSettings(newSettings);
+  return newSettings;
+};
+
+/**
+ * Update show thinking preference
+ */
+export const updateShowThinking = (showThinking: boolean): ResponseSettings => {
+  const currentSettings = getResponseSettings();
+  const newSettings = { ...currentSettings, showThinking };
   setResponseSettings(newSettings);
   return newSettings;
 };

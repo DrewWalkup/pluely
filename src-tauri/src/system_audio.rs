@@ -97,13 +97,6 @@ impl SystemAudioState {
         }
     }
 
-    /// Push a chunk of interleaved f32 samples.
-    pub fn push_samples(&self, samples: &[f32]) {
-        for &s in samples {
-            self.push_sample(s);
-        }
-    }
-
     /// Push samples from a real-time audio thread. Uses try_lock to avoid
     /// blocking the audio IO thread. Drops samples if the mutex is held
     /// (e.g. during get_recent_base64), which is acceptable for a background

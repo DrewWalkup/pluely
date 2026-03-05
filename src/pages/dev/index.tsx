@@ -1,4 +1,4 @@
-import { AIProviders, STTProviders } from "./components";
+import { AIProviders, STTProviders, ShowThinkingToggle } from "./components";
 import Contribute from "@/components/Contribute";
 import { useSettings } from "@/hooks";
 import { PageLayout } from "@/layouts";
@@ -14,6 +14,9 @@ const DevSpace = () => {
 
       {/* STT Providers */}
       <STTProviders {...settings} />
+
+      {/* Reasoning Model Settings */}
+      <ShowThinkingToggle />
 
     </PageLayout>
   );
